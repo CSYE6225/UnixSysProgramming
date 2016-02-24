@@ -9,10 +9,10 @@
 /* SOCK_DGRAM indicates UDP protocol */
 /* Protocol -0 indicates IP protocol */
 int main(int argc , char *argv[]){
-    int socket_desc,port,i;
+    int socket_desc,new_socket,port,i,c;
     char *message,server_reply[2000],*hostname,ip[100];
     struct hostent *he;;
-    struct sockaddr_in server;
+    struct sockaddr_in server,client;
     struct in_addr **addr_list;
     socket_desc = socket(AF_INET , SOCK_STREAM , 0);
     if (socket_desc == -1){
@@ -24,19 +24,22 @@ int main(int argc , char *argv[]){
  	printf("Enter port number\n");
 	return 1;
     }
-
-    printf("Before resolving the port\n");
-    port=atoi(argv[2]);
-    server.sin_port=htons(8888);
+    port=atoi(argv[1]);
+    server.sin_port=htons(port);
     printf("After sin_port\n");
-    i=bind(socket_desc,(struct sockaddr *)&server, sizeof(server));
-    printf("After bind\n");
     printf("i=%d\n",i);
     if(bind(socket_desc,(struct sockaddr *)&server, sizeof(server))<0){
     	puts("bind failed"); 
     }
     puts("bind done");
-
+    listen(socket_desc,3);
+    puts("Waiting for incoming conncetions...");
+    c=sizeof(struct sockaddr_in);
+    new_socket=accept(socket_desc,(struct sockaddr *)&client,(socklen_t*)&c);
+    if (new_socket<0){
+        perror("accpet failed");
+    }
+    puts("Connection accepted");
     return 0;
     printf("Resolving the hostname %s\n",argv[1]);
     if ((he=gethostbyname(argv[1]))==NULL){
