@@ -1,0 +1,8 @@
+#!/bin/bash
+
+while true;
+do
+sudo netstat -anp|grep 2668|wc -l;
+sudo ps aux|grep 2668|awk '{print$4,$5}';
+sleep 5;
+done
