@@ -12,4 +12,4 @@ server/serverListen.sh : Execute the command 'sudo netstat -anp | grep PID | wc 
                           the memory consumption of the server while processing the load.
                           
                           
-client/sendSockets.sh : Keep executing the socketClient program to send the socket requirement.
+client/sendSockets.sh : Keep executing the socketClient program to send the socket requirement....
