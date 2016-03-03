@@ -1,3 +1,4 @@
+STEPS:
 1. open one client (Let client VM to become a “connector” to connect with server) and two servers (two servers is in same VM, one’s job is to receive the connection from client, another is to count). 
 2. get port from live_socket_srv.c in server. =>   vi live_socket_srv.c  =>  server.sin_port = htons( 8888 );
 3. create a new shell scripts in client VM (connector.sh), to make a loop to connect with server again and again (use server ‘s IP 172.31.46.5 and receive port is 8888).
