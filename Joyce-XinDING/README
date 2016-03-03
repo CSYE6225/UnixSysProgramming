@@ -1,0 +1,14 @@
+Xin Ding(Joyce)
+
+PID of the live_socket_srv.o is 3805
+The port of server is 9999
+The internal ip of server is 172.31.44.60
+The internal ip of client is 172.31.30.43
+
+server/ding.sh : Execute the command 'sudo netstat -anp | grep PID | wc -l' 
+                          and 'sudo ps aux | grep PID| awk '{ print $4,$5}' in an endless loop,
+                          to find the number of open connections to the server and
+                          the memory consumption of the server while processing the load.
+                          
+                          
+client/client.sh : Keep executing the socketClient program to send the socket requirement.
