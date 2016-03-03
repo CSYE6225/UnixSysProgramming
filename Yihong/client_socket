@@ -1,0 +1,5 @@
+while true;
+do
+./socket.o 172.31.35.97 8888
+sleep 0.3
+done
