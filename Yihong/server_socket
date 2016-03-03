@@ -1,0 +1,11 @@
+#!/bin/bash
+PID=$(ps aux| grep "\.\/live_socket_srv.o" | awk '{print $2}')
+echo $PID
+while true;
+do
+echo ''
+echo '--------------------------'
+sudo netstat -anp | grep $PID | wc -l;
+ps aux | grep $PID | awk '{ print $4,$5}';
+sleep 0.3;
+done
