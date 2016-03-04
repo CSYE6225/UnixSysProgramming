@@ -1,0 +1,9 @@
+
+1. launch 2 VMs, one represents server, another represents client.
+
+2. For client: amy.sh : for client to connect server recursively.
+               server's private IP: 172.31.30.139
+               port: 9999
+               
+3. For server: amy_srv: check the number of connections and memory consumption during this period.
+               find pid: 30927
