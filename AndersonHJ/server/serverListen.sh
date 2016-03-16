@@ -9,3 +9,5 @@ sudo netstat -anp|grep 18631|wc -l;
 sudo ps aux|grep 18631|awk '{print$4,$5}';
 sleep 5;
 done
+
+#you use static PID 18631. Use PID
