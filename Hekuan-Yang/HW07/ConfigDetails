@@ -1,0 +1,45 @@
+On Server
+
+# find inet ip
+/sbin/ip addr
+
+# the inet ip is 172.31.23.96
+
+# start a connection test
+nc -l 0.0.0.0 5000
+
+# write a new script to do connection statistics
+vim statistics.sh ( script in separate file )
+
+# make statistics.sh executable 
+chmod +x statistics.sh 
+
+# bind the port
+./live_socket_srv.o 5000
+
+# when bind failed, find whether there is a live_socket_srv running.
+ps aux |grep live_socket_srv
+
+# kill the process with PID find in previous command
+kill PID
+
+# bind port again and start statistics 
+./live_socket_srv.o 5000 & ./statistics.sh 
+
+----------------------------------------------------
+On Client
+
+# send a connection test
+telnet 172.31.23.96 5000
+
+# write a new script to make connection requests
+vim client.sh  ( script in separate file )
+
+# make client.sh executable 
+chmod +x client.sh 
+
+# run the script
+./client.sh
+
+
+
