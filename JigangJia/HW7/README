@@ -1,0 +1,13 @@
+PID of the socketServer.o is 14498
+The port of server is 2222
+The internal ip of client is 172.31.40.2
+
+The internal ip of server is 172.31.28.160
+
+server/serverListen.sh : Execute the command 'sudo netstat -anp | grep PID | wc -l' 
+                          and 'sudo ps aux | grep PID| awk '{ print $4,$5}' in an endless loop,
+                          to find the number of open connections to the server and
+                          the memory consumption of the server while processing the load.
+                          
+                          
+client/sendSockets.sh : Keep executing the socketClient program to send the socket requirement.
