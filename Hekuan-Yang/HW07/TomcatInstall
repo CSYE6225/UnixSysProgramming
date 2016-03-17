@@ -1,0 +1,22 @@
+
+access to root
+$ sudo su
+
+add user
+$ adduser demo
+
+add user to sudo group
+# gpasswd -a demo sudo
+
+
+install tomacat 7
+$ sudo apt-get update
+$ sudo apt-get install tomcat7
+
+restart tomcat 7
+$ sudo service tomcat7 restart
+
+install additional package
+$ sudo apt-get install tomcat7-docs tomcat7-admin tomcat7-examples
+
+
