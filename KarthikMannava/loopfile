@@ -1,0 +1,10 @@
+#!/bin/bash
+while true
+do
+./socket.o ec2-52-38-6-201.us-west-2.compute.amazonaws.com 8888
+done
+
+/* socket.o is the compiled file of socket.c*/
+/* ec2-52-38-6-201.us-west-2.compute.amazonaws.com is the public DNS of the server on which live_socket_srv.c is running on port */
+/* by mentioning "8888" in the above code, we are directing socket.o to access port 8888 of ec2-52-38-6-201.us-west-2.compute.amazonaws.com*/
+
