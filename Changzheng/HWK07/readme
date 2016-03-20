@@ -1,1 +1,4 @@
 hw07 assignment content
+
+(1) Run server function live_socket_srv in ec2-54-200-216-172.us-west-2.compute.amazonaws.com and IP is 54.200.216.172
+(2) Run client function socket in ec2-54-200-5-84.us-west-2.compute.amazonaws.com and IP is 54.200.5.84
