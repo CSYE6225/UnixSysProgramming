@@ -1,0 +1,5 @@
+server instance to continue listen the client request.
+In this directory, it has:
+server running program
+server monitor shell script
+server monitor log
