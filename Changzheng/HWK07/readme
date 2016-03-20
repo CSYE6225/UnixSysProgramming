@@ -1,4 +1,13 @@
 hw07 assignment content
 
+Environment Info:
 (1) Run server function live_socket_srv in ec2-54-200-216-172.us-west-2.compute.amazonaws.com and IP is 54.200.216.172
 (2) Run client function socket in ec2-54-200-5-84.us-west-2.compute.amazonaws.com and IP is 54.200.5.84
+
+Infrastructure:
+1 Server runs the listening program--live_socket_srv and occupy the port of 8023;
+2 Client runs the request program--socekt to connect server and get the response;
+3 Furthermore, client uses a shell to repeatly to request the task--socket.sh;
+4 In server point, monitor shell reach to find the PID of server listening program and statistic the number of processing when client
+  request many connection.
+5 In the meantime, monitor also check the using situion of memory in the server. The result is the memory is increasing continuely.
