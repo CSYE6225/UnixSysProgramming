@@ -1,2 +1,5 @@
-client 
+client instance request to server continuely.
 In this directory, it has:
+client running program
+client shell script
+client log
