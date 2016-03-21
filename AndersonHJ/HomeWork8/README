@@ -1,0 +1,21 @@
+
+balancer : http://52.36.84.112
+
+Balcancer will forward request to server1 and server2 alternately.
+
+serve1 : http://52.38.2.102 
+
+server2 : http://52.36.105.142 
+
+server1 and server2 both has a index.php in the directory /var/www/html.
+The client will access the index.php then get the response from server.
+
+
+client will send request to balancer, and get the response from server1 or server2
+sh request.sh : script file will send http request every one second.
+
+When I run the script in a client window, the usage of cpu of server is about 23%,
+then I open more windows to run the script, the usage rate of cpu increased to 89.9%.
+
+
+
