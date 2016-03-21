@@ -5,4 +5,5 @@
         arsort($arr);
     }
     print_r($arr);
+    echo "server1";
 ?>
