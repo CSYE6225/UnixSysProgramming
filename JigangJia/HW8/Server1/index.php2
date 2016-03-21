@@ -1,0 +1,9 @@
+<?php
+
+
+$myfile=fopen("File/File/cc150.pdf",r)or die("Unable to open file!");
+echo fread ($myfile,filesize("File/File/cc150.pdf"));
+# File/File/cc150.pdf is a file in the server1, size is 23544 kb
+echo "SERVER 1";
+exit();
+?>
