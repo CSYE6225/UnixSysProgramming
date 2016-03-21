@@ -1,0 +1,14 @@
+1.	deploy load-balancer
+  1)	sudo apt-get update
+  2)	sudo apt-get install apache2
+  3)	sudo aptitude upgrade
+  4)	sudo aptitude –y upgrade
+  5)	sudo aptitude install –y build-essential
+  6)	sudo su
+  7)	aptitude install –y libapache2-mod-proxy-html libxml2-dev
+  8)	a2enmod
+  9)	proxy proxy_ajp proxy_http rewrite deflate headers proxy_balancer proxy_connect proxy_html
+  10)	sudo service apache2 restart
+  11)	cd /etc/apache2/sites-enabled
+  12)	sudo vi 000-default.conf
+      add some code to this file, please refer 000-default.conf
