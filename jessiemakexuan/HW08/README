@@ -1,1 +1,34 @@
+server1 : http://172.31.26.116/ 
+server2 : http://172.31.20.231/
+load balancer : http://172.31.31.207/
 
+1. client will connect with load balancer through script file -- connecter.sh
+(there is a for loop inside the scriot file, it will send request through command:curl http://172.31.31.207/index.php every second )
+2. load balancer's job is to let client to connect with server1 or server2 in random order.
+3. then server1 or server2 receive the command and then run their big php file(index.php), it will consume memory.
+4. in order to find out which is the limit of this system, I begin to open more and more client.
+5. every time I open a new client and run the connecter.sh, I need to use "top" command in every server to find out the usage of CPU, Memory and IO 
+6. besides in load balancer use the command 'sudo netstat -anp | grep apache2 | wc -l' to get the number of connections to apache2.
+7. in load balancer, use the log file 'access.log' to calculate the access number every minute on one server.
+
+root@ip-172-31-31-207:/# cd /var/log/apache2
+root@ip-172-31-31-207:/var/log/apache2# ls
+access.log  error.log  other_vhosts_access.log
+root@ip-172-31-31-207:/var/log/apache2# vi access.log 
+
+
+This is the record of usage of cpu, memory and connection on the server:
+                          Server1                  Server2
+Number of Client     %CPU      Free_Mem        %CPU      Free_Mem         Number_of_connections       
+1                    37.0      616776 KB      38.5      618480 KB                   7
+2                    66.2      615012 KB      66.7      616728 KB                   8 
+3                    80.4      615004 KB      83.3      616760 KB                   10
+4                    84.7      615004 KB      99.3      616760 KB                   12
+5                    95.7      614880 KB      100.0     615024 KB                   13
+6                    97.3      614756 KB      100.0     613612 KB                   16
+7                    100.0     614692 KB      100.0     612456 KB                   20
+8                    100.0     614500 KB      100.0     611664 KB                   21
+
+
+According to the experimental data above, the CPU will reach to the maximum capacity first, the free memory is also descending.
+According to the access.log, the maximum access number every minute is about  on one server.
