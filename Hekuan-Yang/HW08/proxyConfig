@@ -1,4 +1,4 @@
-sudo nano /etc/apache2/sites-available$ sudo nano 000-default.conf 
+sudo nano /etc/apache2/sites-enabled/000-default.conf
 
 # modified the content as following
 
