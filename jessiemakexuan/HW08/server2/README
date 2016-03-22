@@ -1,0 +1,8 @@
+Set Server2 (In order to let the file useS more memory, we can to change html to php)
+1. sudo apt-get update
+2. sudo apt-get install apache2
+3. sudo apt-get install php5
+4. sudo apt-get install libapache2-mod-php5 php5-mcrypt
+5. cd /var/www/html
+6. sudo rm index.html
+7. sudo vi index.php
