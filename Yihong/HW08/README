@@ -17,7 +17,7 @@
     }
     add x.mp4 in each server and edit nginx.conf
     server{
-      root /homw/ubuntu/server;
+      root /home/ubuntu/server;
       
       location / {
           index x.mp4;
