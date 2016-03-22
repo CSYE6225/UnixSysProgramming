@@ -12,7 +12,7 @@ we can use 'vmstat 3'to get the free memory and idle CPU
 Session 	Load-balancer				 	Server1			Server2	
 amount	Free Mem IdleCPU NumberOf	Free Mem  IdleCPU  NumberOf	  Free Mem   IdleCPU   NumberOf
                          Connection                       Connection                        Connection
-0	352848	 100   	1		172644	  100		1		174596	100	1
+0	352848	 100   	    1		172644	  100		1		174596	100	1
 1	352492	 99		3		170364	  93		3		168563	92	3
 2	351928	 99		5		142008	  88		3		130318	86	3
 3	351632 	 99		7		105923	  78		7		128364	81	5
