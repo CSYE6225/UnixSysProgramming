@@ -1,4 +1,4 @@
-2.	Deploy server1 and server 2
+2.	Deploy  server 2
 1)	sudo apt-get update
 2)	sudo apt-get install apache2
 3)	sudo apt-get install php5
