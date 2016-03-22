@@ -1,0 +1,28 @@
+1. set up two servers, one clinet and one load-balancer
+    server1: 52.27.76.15
+    server2: 52.36.159.181
+    client: 52.26.252.71
+    load-balancer: 52.38.0.176
+    
+2. sudo apt-get install nginx and vim the nginx.conf file
+    add two server in load-balancer
+    upstream backend{
+      server 52.27.76.15;
+      server 52.36.159.181;
+    }
+    server{
+      location / {
+        proxy_pass http://backend;
+      }
+    }
+    add x.mp4 in each server and edit nginx.conf
+    server{
+      root /homw/ubuntu/server;
+      
+      location / {
+          index x.mp4;
+      }
+    }
+3.  create state.sh to show usage and keep record
+4.  in client side, create client.sh to call load-balancer in a loop
+Then we can observe the change
