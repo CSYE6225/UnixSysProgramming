@@ -1,0 +1,14 @@
+Some public IP address:
+Server 1: http://52.27.242.147
+Server 2: http://52.37.38.108
+Load Balancer: http://52.33.112.243
+
+Because Amazon AWS will change the public IP address if I shut down the instaces, so I completed the homework also with another public IP address.
+Load Balancer: heep://52.38.33.178
+
+Server 1 and Server 2 both has a index.php in the /var/www/html.
+The client will access the index.php then get the response from server.
+
+I wrote a file in the client to make unlimited request to the load balancer, and the load balancer will get response from Server 1 and Server 2.
+
+Please see my assignment for more details.
