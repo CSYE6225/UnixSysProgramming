@@ -1,0 +1,35 @@
+Server 1: 172.31.25.202
+Server 2: 172.31.16.138
+Load-balancer: 172.31.27.136
+Client: 172.31.22.24
+The IPs above are all private IPs
+
+
+Create duplicate session to run the sh script in client VM:  
+
+Session amount	      Load-balancer   	      Server1	              Server2
+	                  Free Mem	Idle CPU	Free Mem	Idle CPU    	Free Mem	Idle CPU
+  0	                 352848   100	      172644  	100	            174596	  100
+  1	                 352492	  99	      170364   	93	            168563	  92
+  2	                 351928	  99	      142008	  88	            130318	  86
+  3	                 351632	  99	      105923	  78	            128364	  81
+  4	                 350460  	99	      98668   	72	            126212	  77
+  5	                 350088  	99	      100780	  65	            116592	  64
+  6	                 349408	  99	      97532	    59	            113944	  58
+  7	                 348384  	99	      84196   	47	            94032	    52
+  8	                 347188	  99	      93612	    50	            78716	    48
+  9	                 346576	  98	      42224	    41	            88924	    49
+  10              	 346444	  98	      64044	    43	            65572	    42
+  11	               345488	  99	      40984   	44              60412	    43
+  12                 342744  	99	      42648	    40              52180  	  40
+  13	               343465	  98	      40040	    41              42539	    36
+  14	               341543	  98	      23020	    38	            22368	    40
+  15	               342681	  98      	29656   	41	            27412	    42
+  16                 341741	  99      	16048	    35	            7512	    37
+  17                 339657	  98	      17900	    29              17228	    31
+  18	               337952	  98	      14888	    32	            12192	    29
+  19	               341076  	99	      29960	    30              86284	    34
+  20	               318164 	100	      28088   	0	              202332	  99
+
+When the session’s amount is equal to 20, the idle CPU of server 1 is 0, and the idle CPU of server 2 change back to 99.
+So we can find the maximum capacity is 20. 
