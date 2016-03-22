@@ -37,4 +37,5 @@ amount	Free Mem IdleCPU NumberOf	Free Mem  IdleCPU  NumberOf	  Free Mem   IdleCP
 
 When the session’s amount is equal to 20, the idle CPU of server 1 is 0, and the idle CPU of server 2 change back to 99.
 the number of connection to load balancer is 32, the number of connection to server 1 is 30, and the number of connection to server 2 is 3
-So we can find the maximum number of connection is 32.Then we can use log file to calculate the access number per minute on the server.  
+So we can find the maximum number of connection is 32.Then we can use log file to count the access number per minute on the server.  
+the maximum capacity of load balancer is 1784 connections per mimute.
