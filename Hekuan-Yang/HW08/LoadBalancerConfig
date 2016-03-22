@@ -1,18 +1,18 @@
-#Install apache2
+# Install apache2
 $ sudo aptitude update
 $ sudo aptitude install apache2 
 
-#Getting The Essential Build Tools
+# Getting The Essential Build Tools
 $ sudo aptitude install -y build-essential
 
-#Install the module
+# Install the module
 $ sudo apt-get install libapache2-mod-proxy-html
 
-#Installing the dependency libxml2-dev
+# Installing the dependency libxml2-dev
 $ sudo apt-get install libxml2-dev
 
-#Configuring Apache To Proxy Connections
-#Activating The Modules
+# Configuring Apache To Proxy Connections
+# Activating The Modules
 
 $ sudo a2enmod
 $ proxy proxy_ajp proxy_http rewrite deflate headers proxy_balancer proxy_connect proxy_html
