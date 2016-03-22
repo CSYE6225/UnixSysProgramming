@@ -1,0 +1,9 @@
+install apache2
+$ sudo aptitude update
+$ sudo aptitude install apache2 
+
+Install the module
+$ sudo apt-get install libapache2-mod-proxy-html
+
+Installing the dependency libxml2-dev
+$ sudo apt-get install libxml2-dev
