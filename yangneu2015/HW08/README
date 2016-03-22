@@ -1,4 +1,22 @@
-Balancer:
-Open Model:
+Balancer - Open Model:
 a2enmod
 proxy proxy_ajp proxy_http rewrite deflate headers proxy_balancer proxy_connect proxy_html lbmethod_byrequest
+
+Server - Install PHP5:
+sudo apt-get install libapache2-mod-php5
+
+Record:
+Client        Server1-CPU     Memory          Server2-CPU     Memory          Connection
+1                19.3         739692             15.6         749652             39
+2                34.4         739692             32.7         749652             40
+3                53.3         739568             58.1         749528             40
+4                72.3         739428             69.7         749284             41
+5                85.0         739400             85.0         749428             41
+6                97.0         739308             95.0         749272             41
+7                100          738888             98.0         748680             43
+8                100          738756             100          747788             45
+9                100          738220             100          747196             45
+10               100          737288             100          745908             45
+
+We can see as the number of clients increasing, the usage of CPU will reach 100% but we still have a lot free memory. So
+the limit of this system is caused by CPU.
