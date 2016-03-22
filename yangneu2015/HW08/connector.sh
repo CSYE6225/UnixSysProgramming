@@ -1,5 +1,6 @@
 #!bin/sh
-while(sleep 0.5)
+while true;
 do
-curl http://172.31.31.216/song.mp4;
+curl http://172.31.16.117/index.php;
+sleep 1;
 done
