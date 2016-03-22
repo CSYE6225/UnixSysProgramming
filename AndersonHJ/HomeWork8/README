@@ -14,8 +14,52 @@ The client will access the index.php then get the response from server.
 client will send request to balancer, and get the response from server1 or server2
 sh request.sh : script file will send http request every one second.
 
-When I run the script in a client window, the usage of cpu of server is about 23%,
-then I open more windows to run the script, the usage rate of cpu increased to 89.9%.
+When I run the script in a client window, the usage of cpu of server is about 6%,
+then I open more windows to run the script.
+
+We use the command 'sudo netstat -anp | grep apache2 | wc -l' to get the number of connections to apache2.
+
+We use the log file 'access.log' to calculate the access number every minute on one server.
+
+This is the record of usage of cpu, memory and connection on the server:
+
+%CPU      Free_Mem         Buffer         Cached Mem        Number_of_httpconnections_to_server       Access_number/min
+5.0       315904 KB        78144 KB       516528 KB         4                                         23
+8.7       315780 KB        78168 KB       516536 KB         4                                         23
+19.5      315748 KB        78204 KB       516528 KB         4~6                                       58
+29.3      313140 KB        78256 KB       516544 KB         7~8                                       111
+45.7      312984 KB        78336 KB       516560 KB         9~10                                      158~159
+55.3      312736 KB        78432 KB       516580 KB         11                                        206
+62.5      312076 KB        78504 KB       516604 KB         10~11                                     236
+67.5      311920 KB        78572 KB       516612 KB         11                                        237
+75.7      255860 KB        79128 KB       609116 KB         10~11                                     251
+80.4      310836 KB        79008 KB       516728 KB         11                                        265
+86.3      310736 KB        79052 KB       516744 KB         11                                        268  
+96.0      310736 KB        79080 KB       516752 KB         11                                        283
+89.5      307676 KB        81040 KB       517468 KB         10                                        279
+98.0      306768 KB        81384 KB       517588 KB         11                                        283                                
+79.3      306396 KB        81644 KB       517676 KB         9~10                                      248
+84.4      306948 KB        81796 KB       517724 KB         8~9                                       247
+62.8      306404 KB        82192 KB       517836 KB         8                                         219
+53.3      306032 KB        82384 KB       517884 KB         7                                         177
+45.8      305876 KB        82456 KB       517900 KB         6~7                                       132
+32.8      305784 KB        82580 KB       517908 KB         6                                         116
+13.0      305660 KB        82620 KB       517924 KB         2                                         60
+7.3       305260 KB        83944 KB       518152 KB         1                                         25
+0.0       307240 KB        84008 KB       518156 KB         1                                         0
+
+When the usage of cpu of server reached %95+, the usage of cpu, memory and io is available in the load balancer.
+
+So, we can know from the experimental data above, the cpu will reach to the maximum capacity first,
+and the maximum access number every minute is about 283 on one server.
+
+The free memory will keep reducing, buffer and cached memory will keep growing as the server processing requests. 
+
+
+
+
+
+
 
 
 
