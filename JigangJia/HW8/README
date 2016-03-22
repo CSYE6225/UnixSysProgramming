@@ -5,7 +5,7 @@ Client: 172.31.22.24
 The IPs above are all private IPs
 
 
-Create duplicate session to run the sh script in client VM:  
+Create duplicate session to run the sh script  loopVisit.sh in client VM:  
 
 Session amount	      Load-balancer   	      Server1	              Server2
 	       Free Mem	Idle CPU          Free Mem  Idle CPU               Free Mem	Idle CPU
