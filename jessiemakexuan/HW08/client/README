@@ -1,0 +1,5 @@
+Set client:
+1. cd UnixSysProgramming
+2. vi connecter.sh
+3. chmod 777 connecter.sh
+4. sudo ./connecter.sh
