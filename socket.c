@@ -42,7 +42,7 @@ int main(int argc , char *argv[]){
     }
     puts("Connected");
     
-    message = "GET /index1.html HTTP\r\n\r\n";
+    message = "GET /index.html HTTP\r\n\r\n";
     if(send(socket_desc, message, strlen(message),0)<0){
       puts("Send failed");
       return 1;
