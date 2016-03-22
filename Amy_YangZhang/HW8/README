@@ -1,0 +1,11 @@
+In this homework, we will have 2 servers, 1 load balancer and 1 client
+Server1: ubuntu@ip-172-31-30-139
+Server2: ubuntu@ip-172-31-26-143
+Load Balancer: ubuntu@ip-172-31-21-242
+Client: ubuntu@ip-172-31-18-156
+1.	First, we set a load balancer;Install Apache2 in load balancer VM, get the module and dependencies and set right configurations.
+2.  Second, install php5 in each server; replace the index.html file with a php in the two servers, with a very complex loop, 
+    in order to get limit capacity faster. server1.php and server2.php are the contents in the two server.
+3.  In client, we write a findMaxCapacity.sh to call the balancer continuously. At the same time, load balancer will allocate 
+    an available server to the client’s request each time. 
+4. observe memory/IO/CPU status in two server, the idle cpu become 0 first, then we can conclude that it's cpu reach the server's capacity limit.
