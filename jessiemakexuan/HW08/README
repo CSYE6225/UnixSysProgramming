@@ -31,4 +31,4 @@ Number of Client     %CPU      Free_Mem        %CPU      Free_Mem         Number
 
 
 According to the experimental data above, the CPU will reach to the maximum capacity first, the free memory is also descending.
-According to the access.log, the maximum access number every minute is about  on one server.
+According to the access.log, the maximum access number every minute is about 203 on one server.
