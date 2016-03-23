@@ -3,6 +3,9 @@ on server 1
 ubuntu@ip-172-31-30-40:~$ grep 172.31.26.173 /var/log/apache2/access.log|awk '{print $10,$4}' |sed 's/\[//g' | awk -F\: '{print $1"_"$2"_"$3}' | awk '{arr[$2]+=$1}END{for(i in arr) print i,arr[i]/60}'
 23/Mar/2016_00_40 2620.4
 
+# don't know why the date was differnt from today's, as when running the instance it always show time beyond the local time.
+# find the reason, Amazon Linux instances are set to the UTC (Coordinated Universal Time) time zone by default.
+# reference: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html
 
 on server 2 
 
