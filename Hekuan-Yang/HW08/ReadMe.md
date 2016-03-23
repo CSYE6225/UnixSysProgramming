@@ -14,7 +14,7 @@ Print the status of server
 
 $vmstat 3
 
-When the idle mem run into 0 ( provide in the attched screenshots s1&s2)
+when 5 clents are running at the same time, the idle mem run into 0 ( provide in the attched screenshots s1&s2)
 
 the max number of connection is 11
 
