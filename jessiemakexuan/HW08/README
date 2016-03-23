@@ -7,7 +7,7 @@ load balancer : http://172.31.31.207/
 2. load balancer's job is to let client to connect with server1 or server2 in random order.
 3. then server1 or server2 receive the command and then run their big php file(index.php), it will consume memory.
 4. in order to find out which is the limit of this system, I begin to open more and more client.
-5. every time I open a new client and run the connecter.sh, I need to use "top" command in every server to find out the usage of CPU, Memory and IO 
+5. every time I open a new client and run the connecter.sh, I need to use "vmstat 3" command in every server to find out the usage of CPU, Memory and IO 
 6. besides in load balancer use the command 'sudo netstat -anp | grep apache2 | wc -l' to get the number of connections to apache2.
 7. in load balancer, use the log file 'access.log' to calculate the access number every minute on one server.
 
