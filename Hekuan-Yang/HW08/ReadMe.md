@@ -4,7 +4,7 @@ loadBalancerConfig included command use in install apache2 as load balancer
 proxyConfig included balancer setting in /etc/apache2/sites-enabled/000-default.conf
 
 
-Second, Use load.sh to generate request against load balancer & Use load.php to add load on server.
+Second, Use load.sh to generate request against load balancer & Use index.php to add load on server.
 
 At the same time,
 
