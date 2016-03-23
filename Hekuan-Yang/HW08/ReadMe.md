@@ -1,25 +1,27 @@
-Use load.sh to generate request against load balancer.
+First, deploy load balancer to balance the request from client.
 
-Use load.php to add load on server
+loadBalancerConfig included command use in install apache2 as load balancer
+proxyConfig included balancer setting in /etc/apache2/sites-enabled/000-default.conf
 
-loadBalancerConfig is the way install apache2 as a load balancer
 
-proxyConfig is the load balancer setting in /etc/apache2/sites-enabled/000-default.conf
+Second, Use load.sh to generate request against load balancer & Use load.php to add load on server.
 
-Print the number of connections 
+At the same time,
+
+Print the number of connections through command
 
 $sudo netstat -anp | grep apache2 | wc -l 
 
-Print the status of server
+and Print the status of server
 
-$vmstat 3
+$vmstat 3 or $top
 
-when 5 clients are running at the same time, the idle mem run into 0 ( provide in the attched screenshots s1&s2)
+when number of clients increased to 5, the idle memory run into 0 ( provide in the attched screenshots s1&s2)
 
 at that point, the max number of connection is 11.
 
-use
+on server, use command
 
-$ grep @inetIp/var/log/apache2/access.log|awk '{print $10,$4}' |sed 's/\[//g' | awk -F\: '{print $1"_"$2"_"$3}' | awk '{arr[$2]+=$1}END{for(i in arr) print i,arr[i]/60}'
+$ grep @inetIPofLoadBalancer/var/log/apache2/access.log|awk '{print $10,$4}' |sed 's/\[//g' | awk -F\: '{print $1"_"$2"_"$3}' | awk '{arr[$2]+=$1}END{for(i in arr) print i,arr[i]/60}'
 
 then it will return transactions per minute, details are provided in file named result.
