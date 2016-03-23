@@ -14,11 +14,12 @@ Print the status of server
 
 $vmstat 3
 
-when 5 clents are running at the same time, the idle mem run into 0 ( provide in the attched screenshots s1&s2)
+when 5 clients are running at the same time, the idle mem run into 0 ( provide in the attched screenshots s1&s2)
 
-the max number of connection is 11
+at that point, the max number of connection is 11.
 
 use
+
 $ grep @inetIp/var/log/apache2/access.log|awk '{print $10,$4}' |sed 's/\[//g' | awk -F\: '{print $1"_"$2"_"$3}' | awk '{arr[$2]+=$1}END{for(i in arr) print i,arr[i]/60}'
 
 then it will return transactions per minute.
