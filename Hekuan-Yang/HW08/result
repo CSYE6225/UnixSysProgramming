@@ -1,0 +1,13 @@
+on server 1
+
+
+
+ubuntu@ip-172-31-30-40:~$ grep 172.31.26.173 /var/log/apache2/access.log|awk '{print $10,$4}' |sed 's/\[//g' | awk -F\: '{print $1"_"$2"_"$3}' | awk '{arr[$2]+=$1}END{for(i in arr) print i,arr[i]/60}'
+23/Mar/2016_00_40 2620.4
+
+
+
+on server 2 
+
+ubuntu@ip-172-31-21-1:/var/log/apache2$ grep 172.31.26.173 /var/log/apache2/access.log|awk '{print $10,$4}' |sed 's/\[//g' | awk -F\: '{print $1"_"$2"_"$3}' | awk '{arr[$2]+=$1}END{for(i in arr) print i,arr[i]/60}'
+23/Mar/2016_00_40 2635.65
