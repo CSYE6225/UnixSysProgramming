@@ -22,4 +22,4 @@ use
 
 $ grep @inetIp/var/log/apache2/access.log|awk '{print $10,$4}' |sed 's/\[//g' | awk -F\: '{print $1"_"$2"_"$3}' | awk '{arr[$2]+=$1}END{for(i in arr) print i,arr[i]/60}'
 
-then it will return transactions per minute.
+then it will return transactions per minute, details are provided in file named result.
