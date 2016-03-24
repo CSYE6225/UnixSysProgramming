@@ -1,0 +1,43 @@
+ #using nginx load balancer
+
+        #passenger_root /usr;
+        #passenger_ruby /usr/bin/ruby;
+
+        ##
+        # Virtual Host Configs
+        ##
+        upstream backend{
+            server 52.37.216.242;   #first instance public ip address
+            server 52.38.6.201;     #second instance public ip address
+        }
+        server {
+            location /{
+                  proxy_pass http://backend;
+}
+}
+
+        include /etc/nginx/conf.d/*.conf;
+        #include /etc/nginx/sites-enabled/*;
+}
+
+
+#mail {
+#       # See sample authentication script at:
+#       # http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript
+#
+#       # auth_http localhost/auth.php;
+#       # pop3_capabilities "TOP" "USER";
+#       # imap_capabilities "IMAP4rev1" "UIDPLUS";
+#
+#       server {
+#               listen     localhost:110;
+#               protocol   pop3;
+#               proxy      on;
+#       }
+#
+#       server {
+#               listen     localhost:143;
+#               protocol   imap;
+#               proxy      on;
+#       }
+#}
