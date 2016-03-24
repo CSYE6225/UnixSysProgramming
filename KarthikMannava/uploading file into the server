@@ -1,0 +1,4 @@
+1.The way we upload the file in both the servers is throught WinSCP application.
+2.WinSCP open a connection from your computer(which is the client) to the instances. We can directly upload the file from the 
+  desktop to the /var/www/html directory of the instances.
+  
