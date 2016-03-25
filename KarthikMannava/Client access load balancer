@@ -1,0 +1,8 @@
+while true;
+do
+curl http://52.38.7.33/movie.mp4;  
+sleep 0.001
+done
+
+#this program is accessing the load balancer, whose public ip address is 52.38.7.33. Once the load balancers is accessed, the 
+load balancer decided where to send this request to. The "movie.mp4" is the file that the client is trying to access
