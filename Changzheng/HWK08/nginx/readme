@@ -1,0 +1,2 @@
+nginx as a specility Reverse Proxy tool
+it acts as a load-balance to distribute all requests evenly.
