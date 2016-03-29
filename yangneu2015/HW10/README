@@ -1,1 +1,10 @@
-HW10
+GOALS: Experiment application fault tolerance.
+
+Steps:
+1.	Open two VM as apache servers and install php5, and then create index.php file for each of them.
+2.	Open VM as balancer and set the configuration file to make it connect to servers created before.
+3.	Open VM as client to run a shell file which is a loop of curl so that it could continue connecting the balancer.
+4.	Restart one of the servers to see what whill happen.
+5.  Open another VM as the third server and change configuration file of balancer to make it connect to all the servers.
+6.  Run the shell file from client again.
+7.  Restart one of the servers to see what will happen.
