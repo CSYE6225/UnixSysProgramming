@@ -10,14 +10,8 @@ STEPS:
 7.Restart one of the servers to see what will happen.
 
 RESULT:
-1.When I run loader, it will connect to server1 and server2 alternately. Once I restart one of the server, sometimes
-  it will report “Proxy Error” and then continue to connect to two servers alternately; sometimes it will not report
-  anything, but just keep connecting to the other server and will never connect to the server which has restarted
-  before until I restart the balancer.
-2.When I add the third server to balancer, and run loader, it will connect to the three servers alternately. Once
-  I restart one of the server, sometimes it will report “Proxy Error” and then continue to connect to two servers
-  alternately; sometimes nothing will happen and the loader will keep running smoothly and successfully.
+1.When I run loader, it will connect to server1 and server2 alternately. Once I restart one of the server, sometimes it will report “Proxy Error” and then continue to connect to two servers alternately; sometimes it will not report anything, but just keep connecting to the other server and will never connect to the server which has restarted before until I restart the balancer.
+2.When I add the third server to balancer, and run loader, it will connect to the three servers alternately. Once I restart one of the server, sometimes it will report “Proxy Error” and then continue to connect to two servers alternately; sometimes nothing will happen and the loader will keep running smoothly and successfully.
 
 Conclusion:
-Three-server system is absolutely more stable than two-server system. In two-server system sometimes the server will be
-unavailable if it restarts unless I restart balancer, while in three-server system this situation never happens.
+Three-server system is absolutely more stable than two-server system. In two-server system sometimes the server will be unavailable if it restarts unless I restart balancer, while in three-server system this situation never happens.
