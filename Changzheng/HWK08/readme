@@ -1,6 +1,7 @@
 hw08 assignment content
 
 
+Finally we print the results for each minutes with the amount of served requests. e.g.,
 29/Mar/2016_04_17 1628.27
 29/Mar/2016_04_18 1507.87
 29/Mar/2016_04_19 928.8
