@@ -35,5 +35,128 @@ see Client.sh
 
 Experiment Procedures
 
+Test fault tolerance for 2 Application instances
+1. Client: execute Client.sh in client VM 
+2. Server: 
+execute the vmstat command and observe the reosurce utilization, increase the number of clients inorder to reach server resourse 
+utiliztion(60%-70%) of server 1 and server 2.
+
+ubuntu@ip-172-31-30-139:/var/www/html$ vmstat 3
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 2  0      0 303140  49236 558144    0    0     3     6   36   85  0  0 100  0  0
+ 0  0      0 303056  49236 558148    0    0     0     4  157  151 33  6 61  0  0
+ 1  0      0 276348  49244 558148    0    0     0     4  155  151 33  5 62  0  0
+ 0  0      0 303020  49252 558148    0    0     0     4  156  150 34  6 60  0  0
+ 1  0      0 276352  49252 558152    0    0     0     0  225  191 53 10 37  0  1
+ 1  0      0 276468  49260 558156    0    0     0     4  270  223 65 12 23  0  0
+ 0  0      0 302944  49260 558156    0    0     0     0  270  223 66 11 23  0  0
+ 1  0      0 279728  49268 558160    0    0     0     4  273  229 65 12 23  0  0
+ 1  0      0 298356  49276 558164    0    0     0     4  272  222 67 10 22  0  0
+ 1  0      0 276012  49276 558168    0    0     0     0  269  222 67 11 23  0  0
+ 1  0      0 275948  49284 558168    0    0     0     4  272  224 65 12 22  0  0
+ 0  0      0 302540  49284 558172    0    0     0    11  272  221 67 10 23  0  0
+ 0  0      0 302584  49292 558176    0    0     0     8  265  222 67 10 23  0  0
+ 0  0      0 302584  49300 558180    0    0     0     4  271  224 66 12 23  0  0
+ 
+ According to the data above, we know now the server is in its optimal resource utiliation.
+ restart server 1, observe the vmstat server 2, we can see that the cpu utilization is 
+ 
+ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 3  0      0 273376  45460 570312    0    0     4     5   38   88  1  0 99  0  0
+ 1  0      0 269596  45468 570316    0    0     0    11  278  231 70 10 20  0  0
+ 0  0      0 296068  45468 570320    0    0     0     0  280  224 69 10 21  0  0
+ 1  0      0 269532  45476 570320    0    0     0    12  276  226 70 11 19  0  0
+ 0  0      0 296132  45484 570324    0    0     0     8  279  223 71 10 19  0  0
+ 1  0      0 275112  45484 570328    0    0     0    11  285  223 70 13 17  0  0
+ 1  0      0 269420  45492 570332    0    0     0     4  281  225 71 11 17  0  0
+ 1  0      0 269476  45492 570332    0    0     0     0  278  211 71 10 16  0  2
+ 1  0      0 272508  45500 570336    0    0     0     4  279  219 71 11 18  0  0
+ 1  0      0 269480  45508 570340    0    0     0     4  284  226 74 10 16  0  0
+ 1  0      0 269408  45508 570344    0    0     0     0  281  220 72 10 18  0  0
+ 0  0      0 296068  45516 570344    0    0     0     4  283  220 72 10 18  0  0
+ 2  0      0 242224  45516 570348    0    0     0     0  302  387 81 10  8  0  0
+ 2  0      0 242200  45524 570352    0    0     0     4  285  396 80 10 10  0  0
+ 0  0      0 296008  45532 570352    0    0     0     4  292  400 81  9 10  0  0
+ 2  0      0 242104  45532 570356    0    0     0    13  292  409 81 10 10  0  0
+ 1  0      0 268888  45540 570360    0    0     0     8  295  405 82  8 10  0  0
+ 0  0      0 296000  45540 570364    0    0     0     0  289  400 79 11 10  0  0
+ 1  0      0 296008  45548 570364    0    0     0     4  299  402 80 11 10  0  0
+ 2  0      0 242200  45556 570360    0    0     0     4  298  410 79 11 10  0  0
+ 2  0      0 258620  45556 570372    0    0     0     0  287  397 82  8 10  0  0
+ 2  0      0 253204  45564 570372    0    0     0     4  295  405 80 10 10  0  0
+ 
+ now we use server 2'saccess log to measure the request per seconds or minutes.
+ after filtering unrelated data, we get:
+ 
+ ubuntu@ip-172-31-26-143:/var/www/html$ grep load.php /var/log/apache2/access.log|awk '{print $10,$4}' |sed 's/\[//g' | awk -F\: '{print $1"_"$2"_"$3}' | awk '{arr[$2]+=$1}END{for(i in arr) print i,arr[i]/60}'
+29/Mar/2016_20_42 140.017
+29/Mar/2016_20_43 974.65
+29/Mar/2016_20_44 706.05
+29/Mar/2016_20_49 597.817
+29/Mar/2016_22_10 1201.57
+29/Mar/2016_22_11 1216.12
+29/Mar/2016_22_12 1200.17
+29/Mar/2016_22_13 1171.37
+29/Mar/2016_22_14 1163.08
+29/Mar/2016_22_15 1193.33
+29/Mar/2016_22_16 1193.33
+29/Mar/2016_22_17 1193.33
+29/Mar/2016_22_18 1661.73
+29/Mar/2016_22_19 2161.25
+29/Mar/2016_22_57 1413.47
+29/Mar/2016_22_58 2345
+29/Mar/2016_22_59 2070.38
+29/Mar/2016_21_57 1545.23
+29/Mar/2016_21_58 1141.17
+29/Mar/2016_21_59 748.4
+29/Mar/2016_20_50 691.65
+29/Mar/2016_20_51 1204.7
+29/Mar/2016_20_52 1269.02
+29/Mar/2016_20_53 121.067
+29/Mar/2016_22_00 1341.62
+29/Mar/2016_22_01 880.883
+29/Mar/2016_22_02 1775.23
+29/Mar/2016_22_03 1203.95
+29/Mar/2016_22_04 1189.53
+29/Mar/2016_22_05 1163.82
+29/Mar/2016_22_06 1170.65
+29/Mar/2016_22_07 1193.33
+29/Mar/2016_22_08 1212.25
+29/Mar/2016_22_09 1212.12
+29/Mar/2016_21_21 956.5
+29/Mar/2016_21_22 1896.32
+29/Mar/2016_21_23 816.5
+29/Mar/2016_20_02 124.883
+29/Mar/2016_20_03 586.483
+29/Mar/2016_21_42 514.583
+29/Mar/2016_21_43 261.067
+29/Mar/2016_20_07 109.733
+29/Mar/2016_20_08 238.383
+29/Mar/2016_20_09 52.9667
+29/Mar/2016_20_25 98.4
+
+we can see from the data above, the number of request per minute basically go up to a peek and then go down. 
+This is because when we restart one server, it will stop working for a while, the load balancer will assign more request to another server.
+So, for the another server(no the restart one),the cpu utilization will go up, the number of request/min will increase. 
+Once the server 1 resumes, it will start working again, thus cpu utilization of server 2 and number of request/min will go back to original.
+
+
+Test fault tolerance for 3 Application instances
+1. Client: execute Client.sh in client VM 
+2. Server: 
+execute the vmstat command and observe the reosurce utilization, increase the number of clients in order to reach server resourse 
+utiliztion(60%-70%) of server 1 and server 2.
+
+
+ 
+ 
+ 
+
+
+
+
+
 
 
