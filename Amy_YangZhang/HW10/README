@@ -1,1 +1,39 @@
+Homework 10 
+Experiment of the fault tolerance
+Goal: in this experiment, we are going to experiment application fault tolerance.
+
+Background:
+We will have 5 VMs:
+3 serve as Application instance(172.31.30.139, 172.31.26.143, 172.31.25.64)
+1 load balancer (172.31.21.242)
+1 client (172.31.18.156)
+
+Experiment Prepareation
+Application instance
+I followed the steps and instructions in https://github.com/CSYE6225/msgsrv and https://github.com/CSYE6225/loader-engima
+to enable PHP on these servers, and then load the services.
+before the experiment start, I also check the load is valid so no system error are generated.
+scripts are shown as below:
+ubuntu@ip-172-31-30-139:/var/www/html$ cat /var/log/apache2/error.log
+[Tue Mar 29 06:56:29.876490 2016] [mpm_prefork:notice] [pid 12794] AH00163: Apache/2.4.7 (Ubuntu) PHP/5.5.9-1ubuntu4.14 configured -- resuming normal operations
+[Tue Mar 29 06:56:29.876502 2016] [core:notice] [pid 12794] AH00094: Command line: '/usr/sbin/apache2'
+[Tue Mar 29 14:13:17.474528 2016] [core:error] [pid 15874] [client 52.37.192.157:58748] AH00135: Invalid method in request \xe2\xa5\xcd5l\xdcX\xd3\xa2\xcdOt\x1dZ2\xcay\xaf\xb9\xf1\xb6]\x17^\xeb\x0fZ/\xe7xu\xeeK\x9bk\xc4 / HTTP/1.1
+[Tue Mar 29 20:06:54.761460 2016] [mpm_prefork:notice] [pid 12794] AH00169: caught SIGTERM, shutting down
+[Tue Mar 29 20:06:55.808997 2016] [mpm_prefork:notice] [pid 17224] AH00163: Apache/2.4.7 (Ubuntu) PHP/5.5.9-1ubuntu4.14 configured -- resuming normal operations
+[Tue Mar 29 20:06:55.809037 2016] [core:notice] [pid 17224] AH00094: Command line: '/usr/sbin/apache2'
+
+we can see from above that there are no system errors.
+
+Load Balancer
+for test of 2 server, use the two in homework8, write the right ips addresses in 000-default-2-instance.conf
+for test of 3 server, launch a new VM with the same setting as the existing two instances. place the 3 ips in 000-default-3-instance.conf
+
+Client
+simulate a moderate synthetic server load. here I use a while loop to call the servers continuously. 
+uese curl http://52.37.192.157/load.php, with load balancer's public ip, because load balancer will allocate tasts to each related server
+see Client.sh
+
+Experiment Procedures
+
+
 
