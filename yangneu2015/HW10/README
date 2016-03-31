@@ -1,17 +1,17 @@
-GOALS: Experiment application fault tolerance.
+GOALS: Experiment application fault tolerance for different amount of servers.
 
 STEPS:
-1.Open two VM as apache servers and install php5, and then create index.php file for each of them.
-2.Open VM as balancer and set the configuration file to make it connect to servers created before.
-3.Open VM as client to run a shell file which is a loop of curl so that it could continue connecting the balancer.
-4.Restart one of the servers to see what whill happen.
-5.Open another VM as the third server and change configuration file of balancer to make it connect to all the servers.
-6.Run the shell file from client again.
-7.Restart one of the servers to see what will happen.
+1.	Open two VM as apache servers and install php5, and then create index.php file for each of them.
+2.	Open VM as balancer and set the configuration file to make it connect to servers created before.
+3.	Open VM as client to run a shell file which is a loop of curl so that it could continue connecting the balancer.
+4.	Restart one of the servers to see what while happen.
+5.	Open another VM as the third server and change configuration file of balancer to make it connect to all the servers.
+6.	Run the shell file from client again.
+7.	Restart one of the servers to see what will happen.
 
-RESULT:
-1.When I run loader, it will connect to server1 and server2 alternately. Once I restart one of the server, sometimes it will report “Proxy Error” and then continue to connect to two servers alternately; sometimes it will not report anything, but just keep connecting to the other server and will never connect to the server which has restarted before until I restart the balancer.
-2.When I add the third server to balancer, and run loader, it will connect to the three servers alternately. Once I restart one of the server, sometimes it will report “Proxy Error” and then continue to connect to two servers alternately; sometimes nothing will happen and the loader will keep running smoothly and successfully.
+RESULT and Data:
+1.	When I run loader, it will connect to server1 and server2 alternately. Once I restart one of the server, it will report “Proxy Error” and then keep connecting to the other server and won't connect to the server which has restarted before. It will connect to the restarted server again after a few minutes.
+2.	When I add the third server to balancer, and run loader, it will connect to the three servers alternately. Once I restart one of the server, sometimes it will report “Proxy Error” and then continue to connect to two servers alternately; sometimes nothing will happen and the loader will keep running smoothly and successfully.
 
 Conclusion:
-Three-server system is absolutely more stable than two-server system. In two-server system sometimes the server will be unavailable if it restarts unless I restart balancer, while in three-server system this situation never happens.
+In two-server system, when one server restarts, the other server will have much more work to do. In three-server system, when one server restarts, the workload of the other two servers will just increases a little. So we could see the two-server system will be much easier to meet problems than three-server system, which means three-server system is absolutely more stable than two-server system.
