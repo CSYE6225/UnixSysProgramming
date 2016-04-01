@@ -2,6 +2,8 @@ Homework 10
 Experiment of the fault tolerance
 Goal: in this experiment, we are going to experiment application fault tolerance.
 
+Why Fault tolerance is so important
+
 Background:
 We will have 5 VMs:
 3 serve as Application instance(172.31.30.139, 172.31.26.143, 172.31.25.64)
@@ -144,10 +146,102 @@ Once the server 1 resumes, it will start working again, thus cpu utilization of 
 
 
 Test fault tolerance for 3 Application instances
+modify the load balancer's setting, add another VM to serve request.
 1. Client: execute Client.sh in client VM 
 2. Server: 
 execute the vmstat command and observe the reosurce utilization, increase the number of clients in order to reach server resourse 
-utiliztion(60%-70%) of server 1 and server 2.
+utiliztion(60%-70%) of server1 and server2 and server3.
+
+now we will first shut down server 1, and then server 2, then open server 1 and server 2, observe the situation in server 3
+
+first, we stop server1, observe server3
+
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 2  0      0 268308  46284 570664    0    0     0     0  248  206 60 10 30  0  0
+ 1  0      0 268284  46292 570668    0    0     0     4  266  218 69  9 22  0  0
+ 0  0      0 294784  46292 570668    0    0     0     0  277  212 71  9 19  0  1
+ 1  0      0 268160  46300 570672    0    0     0     4  250  221 63  9 15  0 12
+ 1  0      0 268160  46308 570668    0    0     0     4  277  214 71 11 18  0  0
+ 1  0      0 268124  46308 570680    0    0     0     9  277  218 72  9 19  0  0
+ 1  0      0 268124  46316 570680    0    0     0    12  276  219 72  9 18  0  0
+ 1  0      0 268124  46316 570684    0    0     0     0  278  213 72 10 18  0  0
+ 1  0      0 268124  46324 570688    0    0     0     4  275  224 67 11 23  0  0
+ 1  0      0 268104  46332 570680    0    0     0     4  260  217 66  9 26  0  0
+ 0  0      0 294684  46332 570692    0    0     0     0  262  214 65 11 24  0  0
+ 0  0      0 294692  46340 570696    0    0     0     4  263  216 66 11 23  0  0
+ 1  0      0 268108  46340 570700    0    0     0     0  261  215 65 11 24  0  0
+ 1  0      0 268104  46348 570700    0    0     0     4  267  217 66 10 23  0  0
+ 1  0      0 281332  46356 570696    0    0     0     4  270  215 66 11 24  0  0
+ 1  0      0 268132  46356 570708    0    0     0     0  269  222 68 10 23  0  0
+ 1  0      0 268192  46364 570708    0    0     0    16  270  215 68 10 22  0  0
+ 1  0      0 268192  46364 570712    0    0     0     0  270  216 68 10 22  0  0
+ 1  0      0 268200  46372 570716    0    0     0     8  265  214 66 11 23  0  0
+ 1  0      0 268200  46372 570716    0    0     0     0  266  217 67 10 23  0  0
+ 2  0      0 268068  46380 570720    0    0     0     4  258  217 66  9 25  0  0
+ 0  0      0 294692  46388 570716    0    0     0     4  259  214 66  9 24  0  0
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 1  0      0 268012  46388 570728    0    0     0     0  275  221 67 10 21  0  2
+ 1  0      0 283964  46396 570728    0    0     0     4  257  213 64 10 26  0  0
+ 1  0      0 267964  46396 570732    0    0     0     0  269  214 68  9 23  0  0
+ 1  0      0 267952  46404 570736    0    0     0     4  268  214 68  9 23  0  0
+ 1  0      0 268076  46412 570728    0    0     0    19  276  246 70 10 20  0  0
+ 1  0      0 268124  46412 570740    0    0     0     0  274  223 66 12 22  0  0
+ 1  0      0 268016  46420 570744    0    0     0     8  262  219 63 10 27  0  0
+ 1  0      0 268012  46420 570744    0    0     0     0  266  218 64 10 26  0  0
+ 1  0      0 268012  46428 570748    0    0     0     4  270  220 65 11 24  0  0
+ 1  0      0 267980  46436 570744    0    0     0     4  260  217 64 10 26  0  0
+ 1  0      0 268000  46436 570756    0    0     0     0  263  217 65 10 25  0  0
+ 0  0      0 294600  46444 570756    0    0     0     4  284  228 69 11 20  0  0
+ 0  0      0 294600  46444 570760    0    0     0     0  280  229 69 11 20  0  0
+ 1  0      0 267944  46452 570764    0    0     0     4  283  236 69 12 20  0  0
+ 1  0      0 267888  46460 570760    0    0     0     4  282  227 71 11 18  0  0
+ 1  0      0 267944  46460 570768    0    0     0     0  279  223 70 11 19  0  0
+ 2  0      0 267844  46468 570772    0    0     0    21  286  231 71 12 17  0  0
+ 0  0      0 294584  46468 570776    0    0     0     0  281  227 68 12 19  0  0
+ 3  0      0 215056  46476 570780    0    0     0     4  296  279 73 12 15  0  0
+ 
+ then stop server2, observe server3
+ 
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 4  0      0 212804  46492 570792    0    0     0     0  319  418 90  9  1  0  0
+ 3  0      0 212684  46500 570792    0    0     0     4  314  416 90  9  2  0  0
+ 3  0      0 238152  46508 570788    0    0     0     4  316  417 89 10  2  0  0
+ 3  0      0 222548  46508 570800    0    0     0     0  308  414 89  9  3  0  0
+ 3  0      0 212724  46516 570792    0    0     0    19  319  418 88 11  1  0  0
+ 3  0      0 212684  46516 570804    0    0     0     0  316  414 88 10  2  0  0
+ 2  0      0 266428  46524 570808    0    0     0     8  313  411 89  9  1  0  0
+ 3  0      0 212688  46524 570812    0    0     0     0  301  408 84 10  6  0  0
+ 1  0      0 272248  46532 570812    0    0     0     4  302  407 87  9  5  0  0
+ 3  0      0 212680  46540 570808    0    0     0     4  313  416 88 10  2  0  0
+ 3  0      0 212684  46540 570820    0    0     0     0  317  414 89 10  1  0  0
+ 3  0      0 212592  46548 570820    0    0     0     4  301  414 85 10  6  0  0
+ 3  0      0 212564  46548 570824    0    0     0     0  316  414 88 10  2  0  0
+ 3  0      0 212188  46556 570828    0    0     0     4  311  416 86 10  4  0  0
+ 3  0      0 212312  46556 570832    0    0     0     0  313  420 88  9  3  0  0
+ 3  0      0 211784  46564 570832    0    0     0     4  322  425 87 11  1  0  0
+ 3  0      0 211784  46572 570828    0    0     0    21  307  417 87 10  4  0  0
+
+observe the filtered access.log
+
+
+29/Mar/2016_20_07 209.733
+29/Mar/2016_20_08 231.340
+29/Mar/2016_20_09 638.383   (server1 stop)
+29/Mar/2016_20_10 752.9667
+29/Mar/2016_20_11 834.9543
+29/Mar/2016_20_12 985.529   (server2 stop)
+29/Mar/2016_20_13 1032.446  
+29/Mar/2016_20_14 752.9667  (server2 restart)
+29/Mar/2016_20_07 329.823   (server1 restart)
+29/Mar/2016_20_07 409.7302
+
+
+We can see from the data above, as server1 stop, the number of requests/min increases from 231 to 638, which means server3 share some work
+as server1 stop working. When we stop server2, the number of requests/min go up tp 1032, that can explain server3 affort all the works.
+when we try to resume server1 and server2, then we can see all the traffic back to normal.
 
 
  
