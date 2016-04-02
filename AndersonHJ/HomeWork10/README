@@ -12,16 +12,101 @@ server1, server2 and server3 all has the msgsrv application and load-engima.
 The client will access the load.php then get the response from server.
 The load.php will load the CPU. The client will run a script like a while loop of curl to load the server.
 
+clientX.sh is the script of client to load the server. It uses curl -I to get the header information of 
+response from server and record this information in the file clientX.log.
+
+clientX.log is the log file to record the header information of response from server. 
+If one of the server is shutdown, the response of this query will be different(not like HTTP/1.1 200 OK). 
+And the script will record the time of each response.
+
+In the experiment, I had client1.sh to client5.sh and client1.log to client5.log. Because I need 5 clients to 
+load three servers to keep the usage of cpu to 60%~80%.
+
+Below are my experiment process: 
+
+1. 
+First, to make the balancer to balance two application instances and there are three clients are loading the server 
+and the usage of CPU of these servers are about 70%. 
+ 
+We can get the access number per minute of each server and balancer.
+ 
+    Time              server1     server2     server3     balancer
+01/Apr/2016_05_02	    2193.25	    2183.18	    0	          3193.57
+01/Apr/2016_05_03	    2128.87	    2128.75	    0	          3124.03
+01/Apr/2016_05_04	    2166.17	    2138.18	    0	          3153.83
+01/Apr/2016_05_05	    2124.63	    2155.9	    0	          3106.65
+01/Apr/2016_05_06	    2189.22	    2179.1	    0	          3188.6
+01/Apr/2016_05_07	    2145.92	    2159.45	    0	          3143.9
+01/Apr/2016_05_08	    2166.15	    2162.05	    0	          3158.8
+
+2.
+Then, I added the third server to the balancer. And the usage of CPU of three servers are about 46%. 
+
+    Time              server1     server2     server3     balancer
+01/Apr/2016_05_10	    1441.62	    1441.62	    1431.43	    3153.83
+01/Apr/2016_05_11	    1426.32	    1430.27	    1437.17	    3151.35
+01/Apr/2016_05_12	    1431.5	    1427.32	    1420.53	    3121.55
+
+3.
+I added two clients to load the server so that the usage of CPU of three servers can reach 70%.
+And the access number of balancer also increased.
+
+    Time              server1     server2     server3     balancer
+01/Apr/2016_05_14	    2240.98	    2245.72	    2247.37	    4919.48
+01/Apr/2016_05_15	    2266.95	    2258.78	    2257.2	    4969.15
+01/Apr/2016_05_16	    2282.98	    2292.5	    2285.13	    5011.37
+01/Apr/2016_05_17	    2262.53	    2253.83	    2269.35	    4981.57
+01/Apr/2016_05_18	    2250.02	    2248.07	    2252	      4949.28
+01/Apr/2016_05_19	    2256.6	    2265.3	    2256.47	    4951.77
+01/Apr/2016_05_20	    2207.55	    2213.92	    2211.28	    4847.47
+01/Apr/2016_05_21	    1897.43	    2283.13	    2274.13	    4832.3
 
 
-client will send request to balancer, and get the response from server1 or server2
-sh request.sh : script file will send http request every one second.
+4.
+Then I shutdown server1 for about two minutes and then restart it and to observe the impact on behave of service.
+We can see the performance on access number of server:
 
-When I run the script in a client window, the usage of cpu of server is about 6%,
-then I open more windows to run the script.
+    Time              server1     server2     server3     balancer
+01/Apr/2016_05_22	    0	          2200.27	    2213.65	    3235.78
+01/Apr/2016_05_23	    0	          2203.87	    2203.67	    3223.37
+01/Apr/2016_05_24	    329.967	    2199.83	    2198.17	    3352.5
+01/Apr/2016_05_25	    2257.6	    2261.33	    2256	      4954.25
+01/Apr/2016_05_26	    2224.57	    2227.58	    2219.78	    4877.27
+01/Apr/2016_05_27	    2216.97	    2212.87	    2222.75	    4882.23
+01/Apr/2016_05_28	    2229.53	    2229.55	    2225.23	    4874.78
 
-We use the command 'sudo netstat -anp | grep apache2 | wc -l' to get the number of connections to apache2.
 
-We use the log file 'access.log' to calculate the access number every minute on one server.
+5.
+Second time, I shutdown the server2 and restart it. I got the similar result:
 
-This is the record of usage of cpu, memory and connection on the server
+    Time              server1     server2     server3     balancer
+01/Apr/2016_05_33	    2162.88	    206.75	    2179.1	    3538.35
+01/Apr/2016_05_34	    2145.22	    0	          2145.9	    3148.87
+01/Apr/2016_05_35	    2130.82	    0	          2122.98	    3104.17
+01/Apr/2016_05_36	    2220.63	    1999.37	    2224	      4509.73
+01/Apr/2016_05_37	    2251.75	    2246.87	    2248.42	    4939.35
+01/Apr/2016_05_38	    2263.25	    2260.08	    2268.72	    4971.63
+01/Apr/2016_05_39	    2227.48	    2224.65	    2218.57	    4869.82
+01/Apr/2016_05_40	    2230	      2246.87	    2236.85	    4919.48
+01/Apr/2016_05_41	    2221.75	    2211.85	    2221.82	    4884.72
+
+And we might find one or two responses like 'HTTP/1.1 502 Proxy Error' in the clientX.log .
+When we shutdown the server, client may get a information '502 Proxy Error', 
+because the balancer can't get the response from this server.
+
+
+Finally, we can see the process of changing on line graph. LineGraph.jpg
+We get the experimental result that 
+(1) When we shutdown one server, the access number of balancer will reduce by about %30;
+(2) When we shutdown one server, the access number of other servers will reduce by about 4.5% .
+
+So, the impact on the user behave is not slight when one server shutdown for a while.
+But if the server is just restart, the impact is not very big.
+And other servers would not be impact heavily.
+
+
+
+
+
+
+
