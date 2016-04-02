@@ -1,0 +1,27 @@
+balancer public IP: http://52.38.123.237
+
+Balcancer will forward request to server1 and server2 and server3 alternately.
+
+server1 private IP: http://172.31.32.110 
+
+server2 private IP: http://172.31.45.93
+
+server3 private IP: http://172.31.39.176
+
+server1, server2 and server3 all has the msgsrv application and load-engima.
+The client will access the load.php then get the response from server.
+The load.php will load the CPU. The client will run a script like a while loop of curl to load the server.
+
+
+
+client will send request to balancer, and get the response from server1 or server2
+sh request.sh : script file will send http request every one second.
+
+When I run the script in a client window, the usage of cpu of server is about 6%,
+then I open more windows to run the script.
+
+We use the command 'sudo netstat -anp | grep apache2 | wc -l' to get the number of connections to apache2.
+
+We use the log file 'access.log' to calculate the access number every minute on one server.
+
+This is the record of usage of cpu, memory and connection on the server
