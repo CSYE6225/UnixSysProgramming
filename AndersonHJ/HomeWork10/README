@@ -43,9 +43,9 @@ We can get the access number per minute of each server and balancer.
 Then, I added the third server to the balancer. And the usage of CPU of three servers are about 46%. 
 
     Time              server1     server2     server3     balancer
-01/Apr/2016_05_10	 1441.62	    1441.62	    1431.43	    3153.83
-01/Apr/2016_05_11	 1426.32	    1430.27	    1437.17	    3151.35
-01/Apr/2016_05_12	 1431.5	    1427.32	    1420.53	    3121.55
+01/Apr/2016_05_10     1441.62     1441.62     1431.43     3153.83
+01/Apr/2016_05_11     1426.32     1430.27     1437.17     3151.35
+01/Apr/2016_05_12     1431.5      1427.32     1420.53     3121.55
 
 3.
 I added two clients to load the server so that the usage of CPU of three servers can reach 70%.
