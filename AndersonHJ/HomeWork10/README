@@ -80,8 +80,8 @@ We can see the performance on access number of server:
 Second time, I shutdown the server2 and restart it. I got the similar result:
 
     Time              server1     server2     server3     balancer
-01/Apr/2016_05_33	    2162.88	    206.75	    2179.1	    3538.35
-01/Apr/2016_05_34	    2145.22	    0	          2145.9	    3148.87
+01/Apr/2016_05_33	2162.88	    206.75	    2179.1	    3538.35
+01/Apr/2016_05_34	2145.22	    0	          2145.9	    3148.87
 01/Apr/2016_05_35	    2130.82	    0	          2122.98	    3104.17
 01/Apr/2016_05_36	    2220.63	    1999.37	    2224	      4509.73
 01/Apr/2016_05_37	    2251.75	    2246.87	    2248.42	    4939.35
