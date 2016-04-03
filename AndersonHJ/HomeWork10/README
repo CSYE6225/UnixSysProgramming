@@ -91,6 +91,15 @@ Second time, I shutdown the server2 and restart it. I got the similar result:
 01/Apr/2016_05_41     2221.75     2211.85     2221.82     4884.72
 
 And we might find one or two responses like 'HTTP/1.1 502 Proxy Error' in the clientX.log .
+The content of file:
+
+HTTP/1.1 200 OK
+Date: Fri, 01 Apr 2016 05:21:45 GMT
+HTTP/1.1 502 Proxy Error
+Date: Fri, 01 Apr 2016 05:21:53 GMT
+HTTP/1.1 200 OK
+Date: Fri, 01 Apr 2016 05:21:54 GMT
+
 When we shutdown the server, client may get a information '502 Proxy Error', 
 because the balancer can't get the response from this server.
 
