@@ -31,8 +31,8 @@ and the usage of CPU of these servers are about 70%.
 We can get the access number per minute of each server and balancer.
  
     Time              server1     server2     server3     balancer
-01/Apr/2016_05_02	   2193.25	    2183.18	    0	          3193.57
-01/Apr/2016_05_03	   2128.87	    2128.75	    0	          3124.03
+01/Apr/2016_05_02	 2193.25	    2183.18	    0	          3193.57
+01/Apr/2016_05_03	 2128.87	    2128.75	    0	          3124.03
 01/Apr/2016_05_04	   2166.17	    2138.18	    0	          3153.83
 01/Apr/2016_05_05	   2124.63	    2155.9	    0	          3106.65
 01/Apr/2016_05_06	   2189.22	    2179.1	    0	          3188.6
