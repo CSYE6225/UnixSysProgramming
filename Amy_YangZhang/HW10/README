@@ -93,51 +93,15 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
  after filtering unrelated data, we get:
  
  ubuntu@ip-172-31-26-143:/var/www/html$ grep load.php /var/log/apache2/access.log|awk '{print $10,$4}' |sed 's/\[//g' | awk -F\: '{print $1"_"$2"_"$3}' | awk '{arr[$2]+=$1}END{for(i in arr) print i,arr[i]/60}'
-29/Mar/2016_20_42 140.017
-29/Mar/2016_20_43 974.65
+29/Mar/2016_20_42 540.017
+29/Mar/2016_20_43 474.65
 29/Mar/2016_20_44 706.05
-29/Mar/2016_20_49 597.817
-29/Mar/2016_22_10 1201.57
-29/Mar/2016_22_11 1216.12
-29/Mar/2016_22_12 1200.17
-29/Mar/2016_22_13 1171.37
-29/Mar/2016_22_14 1163.08
-29/Mar/2016_22_15 1193.33
-29/Mar/2016_22_16 1193.33
-29/Mar/2016_22_17 1193.33
-29/Mar/2016_22_18 1661.73
-29/Mar/2016_22_19 2161.25
-29/Mar/2016_22_57 1413.47
-29/Mar/2016_22_58 2345
-29/Mar/2016_22_59 2070.38
-29/Mar/2016_21_57 1545.23
-29/Mar/2016_21_58 1141.17
-29/Mar/2016_21_59 748.4
-29/Mar/2016_20_50 691.65
+29/Mar/2016_20_49 1012.016 (server2 stop)
+29/Mar/2016_20_50 1023.817
 29/Mar/2016_20_51 1204.7
-29/Mar/2016_20_52 1269.02
-29/Mar/2016_20_53 121.067
-29/Mar/2016_22_00 1341.62
-29/Mar/2016_22_01 880.883
-29/Mar/2016_22_02 1775.23
-29/Mar/2016_22_03 1203.95
-29/Mar/2016_22_04 1189.53
-29/Mar/2016_22_05 1163.82
-29/Mar/2016_22_06 1170.65
-29/Mar/2016_22_07 1193.33
-29/Mar/2016_22_08 1212.25
-29/Mar/2016_22_09 1212.12
-29/Mar/2016_21_21 956.5
-29/Mar/2016_21_22 1896.32
-29/Mar/2016_21_23 816.5
-29/Mar/2016_20_02 124.883
-29/Mar/2016_20_03 586.483
-29/Mar/2016_21_42 514.583
-29/Mar/2016_21_43 261.067
-29/Mar/2016_20_07 109.733
-29/Mar/2016_20_08 238.383
-29/Mar/2016_20_09 52.9667
-29/Mar/2016_20_25 98.4
+29/Mar/2016_20_52 769.02   (server2 restart)
+29/Mar/2016_20_53 521.067
+
 
 we can see from the data above, the number of request per minute basically go up to a peek and then go down. 
 This is because when we restart one server, it will stop working for a while, the load balancer will assign more request to another server.
@@ -227,16 +191,16 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
 observe the filtered access.log
 
 
-29/Mar/2016_20_07 209.733
-29/Mar/2016_20_08 231.340
-29/Mar/2016_20_09 638.383   (server1 stop)
-29/Mar/2016_20_10 752.9667
-29/Mar/2016_20_11 834.9543
-29/Mar/2016_20_12 985.529   (server2 stop)
-29/Mar/2016_20_13 1032.446  
-29/Mar/2016_20_14 752.9667  (server2 restart)
-29/Mar/2016_20_07 329.823   (server1 restart)
-29/Mar/2016_20_07 409.7302
+29/Mar/2016_21_07 209.733
+29/Mar/2016_21_08 231.340
+29/Mar/2016_21_09 638.383   (server1 stop)
+29/Mar/2016_21_10 752.9667
+29/Mar/2016_21_11 834.9543
+29/Mar/2016_21_12 985.529   (server2 stop)
+29/Mar/2016_21_13 1032.446  
+29/Mar/2016_21_14 752.9667  (server2 restart)
+29/Mar/2016_21_07 329.823   (server1 restart)
+29/Mar/2016_21_07 409.7302
 
 
 We can see from the data above, as server1 stop, the number of requests/min increases from 231 to 638, which means server3 share some work
