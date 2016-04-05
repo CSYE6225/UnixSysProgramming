@@ -1,7 +1,7 @@
 <?php
    $arr = scandir("/proc/");
     
-    for($x=0;$x<100000;$x++){
+    for($x=0;$x<10000;$x++){
         asort($arr);
         arsort($arr);
     }
