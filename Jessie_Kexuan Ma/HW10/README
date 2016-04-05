@@ -1,8 +1,87 @@
-HomeWork 10
+Homework 10
+Kexuan Ma 04/04/2016
 
-client IP: 172.31.46.5
-loadBalancer IP: 172.31.31.207
-server1 IP: 172.31.26.116
-server2 IP: 172.31.20.231
-server3 IP: 172.31.21.94
+Goal:  
+In this assignment we are going to find out fault tolerance between different amount of servers (two servers and three servers). 
 
+We have five VMs:
+Client IP: 172.31.46.5
+Load Balancer IP: 172.31.31.207
+Server1 IP: 172.31.26.116
+Server2 IP: 172.31.20.231
+Server3 IP: 172.31.21.94
+
+
+FIRST PART – two servers system:
+
+1. Just like the homework 08, we have set up one client, one load balancer, and two servers with php workloads. And we know, client’s job is to connect with load balancer through script file -- connecter.sh. but here, there is some changes in this experiment, after first try, I delete the sleep time which is in the loop, because if I just restart the apache2 in one of the server instead of shutdown it, the access number every minute is too little to count.
+
+2. Besides, because of this reason, I also changed index.php, to make it works faster.
+
+3. Then, in this two servers experiment, load balancer's job is to let client to connect with server1 or server2 in random order.
+
+4. Before start the client, I also use the command ubuntu@ip-172-31-26-116:/var/www/html$ cat /var/log/apache2/error.log and “ubuntu@ip-172-31-20-231:/var/www/html$ cat /var/log/apache2/error.log ”to check whether the load is valid so no system errors are generated (or just open a web through their public IP). 
+
+5. start the client with sudo ./connecter.sh, when it running, restart one of the server
+
+6. Get access.log use the command: 
+1) cd /var/log/apache2  
+2)cat access.log 
+
+7. Count total access number per 15 second in every server, find out the result.
+
+
+
+
+Second PART – three servers:
+
+1. Open another VM, install apache2 php5 libapache2-mod-php5 php5-mcrypt, just like the servers before. Also, create the index.php workload.
+
+2. Change the 000-default.conf in load balancer, add another server inside:
+<Proxy balancer://loadBalancer>
+    #server1
+    BalancerMember http://172.31.26.116/
+    #server2
+BalancerMember http://172.31.20.231/
+    #server3
+BalancerMember http://172.31.21.94/
+</Proxy>
+
+3. Then, don’t forget to restart the apache2 in Load Balancer!
+
+4. just like the first part, checking whether these three server is valid, running the client, restart one of the server, and then get the access.log in each server
+
+5. Count total access number per 15 second in every server, find out the result.
+ 
+
+Outcome: 
+
+I have tried several times to restart one of the servers, sometimes the outcome is like this, after almost one minute server1 begin to show again: 
+ubuntu@ip-172-31-46-5:~/UnixSysProgramming$ sudo ./connecter.sh 
+server1server2server3server1server2server3server1server2server3server1server2server3server1server2server3server1server2server3server1server2server3server1server2server3server1server2server3server1server2server3<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>502 Proxy Error</title>
+</head><body>
+<h1>Proxy Error</h1>
+<p>The proxy server received an invalid
+response from an upstream server.<br />
+The proxy server could not handle the request <em><a href="/index.php">GET&nbsp;/index.php</a></em>.<p>
+Reason: <strong>Error reading from remote server</strong></p></p>
+<hr>
+<address>Apache/2.4.7 (Ubuntu) Server at 172.31.31.207 Port 80</address>
+</body></html>
+server2server3server2server3server2server3server2server3server2server3server2server3server2server3server2server3server2server3server2server3server2server3server2server3server2server3server2server3server2server3server2server3server2server3server2server3server2server3server2server3server2server3server2server3server2server3server2server3server2server1
+But also sometimes there is no 502 Proxy Error showing up, just after server1 restart, it will work immediately. 
+
+According to the five access.log which showing in the github, we can get these two Charts to show the result: 
+
+
+
+
+Conclusion:
+
+According to this, we can find out that when we restart one server, the number of request per 15 seconds will go down to 0. It means it will stop working for a while, the load balancer will assign more request to other servers, so theirs number of request will increase. But the total request is always same. 
+
+In two-server system, when one server restarts, the other server will have almost two times works to do. 
+In three-server system, when one server restarts, the requests of the other two servers will just increases a little (just half of the request when three servers are all works well). 
+It means that the more servers one systems have, the higher fault tolerance it will have.
