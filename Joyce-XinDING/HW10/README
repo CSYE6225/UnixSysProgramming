@@ -1,0 +1,174 @@
+Goal of HW10:
+The goal of this homework is to experiment application fault tolerance. In the first part of my homework, I use 1 load balancer to proxy traffic among 2 application instances. When there is a client to send requests to the load balancer, one of the server suddenly shut down(simulate a fault occurs), and to see what happened to the other server. In the second part, I add a third server to take a part of the workload and see the differences between the results. The steps and analysis are stated below: 
+
+The first part:
+Fault between 2 instances, using 2 Servers, 1 work load balancer, 1 client.
+After follow the steps in https://github.com/CSYE6225/msgsrv and https://github.com/CSYE6225/loader-engima, change the configuration in load balancer:
+000-default.conf:
+<Proxy balancer://mycluster>
+    # Define back-end servers:
+
+    # Server 1
+    BalancerMember http:// 172.31.44.60
+
+    # Server 2
+    BalancerMember http:// 172.31.28.66
+</Proxy>
+
+For the record, http://52.37.224.76 is Server 1’s public IP; http://52.36.92.249 is Server 2’s public IP.
+
+Then, create a file in client to make unlimited requests:
+Load.sh:
+#!/bin/sh
+
+while (sleep 0.005)
+do
+curl http:// 172.31.21.164/
+done
+
+Then run this program.
+
+Server 1: (CPU usage is around 70%)
+Command: vmstat 3
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 3  0      0 779628  12688 124036    0    0     8     3   19   35  1  0 99  0  0
+ 1  0      0 797224  12696 124040    0    0     0    15  288  246 71 11 18  0  0
+ 1  0      0 791044  12704 124044    0    0     0     8  290  241 72 13 15  0  0
+ 2  0      0 778984  12704 124048    0    0     0     4  289  228 71 11 12  0  7
+ 0  0      0 806084  12712 124052    0    0     0     4  279  240 68 11 13  0  7
+ 1  0      0 779580  12712 124052    0    0     0     0  300  244 74 12 14  0  0
+ 1  0      0 779628  12720 124056    0    0     0     4  296  246 76 10 14  0  0
+ 1  0      0 779612  12728 124060    0    0     0     4  295  236 75 12 13  0  0
+ 1  0      0 779612  12728 124064    0    0     0     0  299  236 75 12 13  0  0
+ 1  0      0 779628  12736 124068    0    0     0     4  292  241 71 13 16  0  0
+ 1  0      0 779612  12736 124072    0    0     0     0  294  242 74 11 14  0  0
+ 0  0      0 806068  12744 124072    0    0     0     4  293  244 73 11 15  0  0
+ 0  0      0 806068  12752 124076    0    0     0     4  295  242 74 11 15  0  0
+ 1  0      0 779504  12752 124080    0    0     0    13  295  241 73 13 15  0  0
+ 1  0      0 779456  12760 124084    0    0     0     8  298  245 75 11 14  0  0
+ 1  0      0 779484  12760 124088    0    0     0     0  298  242 72 13 15  0  0
+ 1  0      0 779488  12768 124092    0    0     0     4  296  245 72 13 15  0  0
+
+Server 2: (CPU usage is around 60%)
+Command: vmstat 3
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 2  0      0 743124  13804 185448    0    0    10     6   22   42  1  0 98  0  0
+ 0  0      0 742852  13812 185452    0    0     0    16  287  243 70 10 19  0  0
+ 1  0      0 716144  13812 185456    0    0     0     0  229  201 55  8 36  0  1
+ 1  0      0 716176  13820 185456    0    0     0     8  293  246 72 12 16  0  0
+ 1  0      0 716172  13828 185460    0    0     0     4  286  245 68 12 20  0  0
+ 1  0      0 721524  13828 185464    0    0     0     0  282  233 70 11 19  0  0
+ 1  0      0 716176  13836 185468    0    0     0     4  284  242 69 12 19  0  0
+ 1  0      0 716172  13836 185472    0    0     0     0  282  239 69 11 19  0  0
+ 1  0      0 719292  13844 185476    0    0     0     4  284  240 69 11 19  0  0
+ 1  0      0 716176  13852 185476    0    0     0     4  283  245 68 13 19  0  0
+
+
+Then, use sudo /etc/init.d/apache2 restart in Server 2, to make the Server 2 shut down for a very short while then start again. When the Server 2 shut down, the usage in Server 1 will increase and then gradually decrease.
+The situation in Server 1: (CPU usage increases to around 80%)
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 3  0      0 752188  12864 124156    0    0     0     4  301  417 81 11  9  0  0
+ 2  0      0 752128  12864 124160    0    0     0     0  297  410 80 12  9  0  0
+ 2  0      0 752112  12872 124164    0    0     0     4  301  410 83 10  7  0  0
+ 2  0      0 752084  12880 124164    0    0     0     7  311  433 82 10  8  0  0
+ 2  0      0 781332  12880 124168    0    0     0     0  300  410 81 11  8  0  0
+ 2  0      0 802924  12888 124172    0    0     0     4  298  407 81 11  8  0  0
+ 2  0      0 757900  12888 124176    0    0     0     0  303  406 81 11  8  0  0
+ 2  0      0 752032  12896 124176    0    0     0    16  304  387 77 11  6  0  7
+ 2  0      0 756176  12904 124180    0    0     0     8  301  398 82  9  6  0  4
+ 2  0      0 752072  12904 124184    0    0     0     7  303  405 83 10  7  0  0
+ 2  0      0 752036  12912 124188    0    0     0     4  301  405 81 11  8  0  0
+ 2  0      0 752032  12912 124188    0    0     0     0  305  410 82 10  8  0  0
+ 2  0      0 752084  12920 124192    0    0     0     4  303  403 83  9  7  0  0
+ 2  0      0 752032  12928 124196    0    0     0     4  305  408 82 10  8  0  0
+ 1  0      0 782184  12928 124200    0    0     0     3  286  252 75  9 16  0  0
+ 1  0      0 785868  12936 124200    0    0     0     4  297  248 73 12 15  0  0
+ 1  0      0 779116  12936 124204    0    0     0     0  291  245 75 10 15  0  0
+ 1  0      0 779116  12944 124208    0    0     0     4  293  242 72 13 15  0  0
+ 1  0      0 779084  12952 124212    0    0     0     4  295  241 74 12 14  0  0
+ 1  0      0 802804  12952 124216    0    0     0    13  293  240 74 11 15  0  0
+ 0  0      0 805588  12960 124220    0    0     0    12  290  240 74 11 15  0  0
+ 1  0      0 805472  12960 124220    0    0     0     0  289  245 71 12 16  0  0
+ 1  0      0 779116  12968 124224    0    0     0     4  295  244 73 12 15  0  0
+ 1  0      0 805568  12968 124228    0    0     0     0  287  238 71 12 17  0  0
+ 1  0      0 779132  12976 124232    0    0     0     4  292  241 74 11 15  0  0
+
+Let’s see the log in Server 1.
+Command:
+grep load.php /var/log/apache2/access.log|awk '{print $10,$4}' |sed 's/\[//g' | awk -F\: '{print $1"_"$2"_"$3}' | awk '{arr[$2]+=$1}END{for(i in arr) print i,arr[i]/60}'
+29/Mar/2016_22_58 2519.77
+29/Mar/2016_22_59 1348.57
+29/Mar/2016_22_51 1250.85
+29/Mar/2016_22_52 1313.67
+29/Mar/2016_22_53 2194.47
+29/Mar/2016_22_54 2224.32
+29/Mar/2016_22_55 1866.65
+29/Mar/2016_22_56 2609.93(At this point I restart Server 2, and then there is a peak)
+29/Mar/2016_22_57 2538.75
+29/Mar/2016_22_48 1897.34
+
+We can see the request/min is changing all the time.
+When I restart Server 2’s apache2 service, there is a peak number of requests in Server 1, and then the peak goes down with time goes by. So the conclusion is, if one server suddenly shut down, the other server will take the load and won’t effect the requests, but the total numbers of requests will decrease. After the broken server goes well again, the other server will recover its original amount of load.
+
+
+The second part:
+Fault between 3 instances, using 3 Servers, 1 workload balancer, 1 client.
+Make a little change to the load balancer:
+<Proxy balancer://mycluster>
+    # Define back-end servers:
+
+    # Server 1
+    BalancerMember http:// 172.31.44.60
+
+    # Server 2
+    BalancerMember http:// 172.31.20.40
+
+    # Server 3
+    BalancerMember http:// 172.31.20.40
+</Proxy>
+
+Keeping adding the number of clients a to make the usage percentage at 60%-70% just like what I did in the first part, and restart one instance at a time(5 minutes) to observe the impact:
+(Because the procedures are very similar to the first part, so I just jump to the result)
+
+The log in Server 1:
+30/Mar/2016_00_16 765.517
+29/Mar/2016_22_14 737.817
+29/Mar/2016_22_15 1381.83
+29/Mar/2016_22_16 2784.92(At this point, Server 2 shut down suddenly)
+29/Mar/2016_22_17 1848.783
+29/Mar/2016_22_18 1024.8
+29/Mar/2016_22_52 1320.17
+29/Mar/2016_22_53 1938.2
+29/Mar/2016_22_54 2274.37(At this point, Server 3 shut down suddenly)
+29/Mar/2016_23_21 1777.817
+29/Mar/2016_23_25 1332.58
+29/Mar/2016_23_26 1325.02
+29/Mar/2016_23_27 1020.983
+29/Mar/2016_23_41 1806.97(At this point, Server 2 shut down suddenly)
+29/Mar/2016_23_42 1816.12
+29/Mar/2016_23_43 1342.87
+29/Mar?2016_23_44 1543.29
+29/Mar/2016_23_46 1789.65
+30/Mar/2016_00_01 2612.82(At this point, Server 3 shut down suddenly)
+29/Mar/2016_23_47 2612.2
+30/Mar/2016_00_02 2610
+29/Mar/2016_23_48 2555.45
+30/Mar/2016_00_03 2607.48
+29/Mar/2016_23_49 2351.12
+30/Mar/2016_00_04 2612.27
+30/Mar/2016_00_05 2495.67
+30/Mar/2016_00_06 2468.43
+30/Mar/2016_00_07 2489.2
+30/Mar/2016_00_08 2500.48
+30/Mar/2016_00_09 2530.47
+
+
+We can see from the first peak of it, if Server 2 shut down suddenly, the fault tolerant here is: the workload taken by Server 2 originally will flow in Server 1 & 3, and after Server 2 recovered, the workload would be divided and relocated again. And for the second peak, Server 3 shut down, there is a small increase on Sever 1 and Sever 2. And this could also be seen in the third and the forth peak.
+
+Conclusion:
+Compare to using 2 instances as server, 3 instances are more stable in the fault tolerance. We can see in the chart that when there is an unexpected fault occurs, the performance with 3 instances are less fluctuated than 2 instances, that is to say, 3 instances can provide relatively better performance in fault tolerance than 2 instances. 
+
+
