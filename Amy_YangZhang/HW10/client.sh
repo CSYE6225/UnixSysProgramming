@@ -1,6 +1,6 @@
 while true;
 do
-curl -I http://52.38.123.237/load.php|head -2 >> clientX.log;
+curl http://52.37.192.157/load.php;
 
 sleep 0.05;
 done
