@@ -1,0 +1,5 @@
+Task:
+1 Specify CLA(Client + Loadbalance + Apache2) architeture;
+2 Sport the resource situation of server;
+3 Verify all funcitons through shell;
+4 Test the characteristic of Fault-Tolerance.
