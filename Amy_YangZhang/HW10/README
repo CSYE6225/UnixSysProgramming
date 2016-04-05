@@ -1,8 +1,12 @@
 Homework 10 
 Experiment of the fault tolerance
-Goal: in this experiment, we are going to experiment application fault tolerance.
+Goal
+In this experiment, we are going to experiment application fault tolerance. 
+Fault tolerance is a system’s ability to deal with malfunctions. 
+Fault tolerance is very important for a system because it is expected to be always functional to its users. 
+In designing a fault-tolerant system, we must realize that 100% fault tolerance can never be achieved. 
+Moreover, the closer we try to get to 100%, the more costly our system will be.
 
-Why Fault tolerance is so important
 
 Background:
 We will have 5 VMs:
@@ -206,6 +210,10 @@ observe the filtered access.log
 We can see from the data above, as server1 stop, the number of requests/min increases from 231 to 638, which means server3 share some work
 as server1 stop working. When we stop server2, the number of requests/min go up tp 1032, that can explain server3 affort all the works.
 when we try to resume server1 and server2, then we can see all the traffic back to normal.
+
+Conclusion
+The use of load balancer to optimally assigning works to multiple servers can effectively improve fault tolerance of a system. 
+And the more servers for a service, the higher possibility to deal with unexpected system interruptions.
 
 
  
