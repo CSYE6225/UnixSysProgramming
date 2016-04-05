@@ -1,0 +1,10 @@
+<?php
+    $arr = scandir("/proc/");    //make a for loop to consume memory(sort array)
+    for($x=0;$x<10000;$x++){
+
+        asort($arr);
+        
+    }
+    
+    echo "server3";
+?>
