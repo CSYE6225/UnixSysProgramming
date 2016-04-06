@@ -5,19 +5,7 @@ Server1 private IP: 172.31.29.109
 Experiment Goals: Experiment application fault tolerance for different amount of servers.
 
 1. Create 2 VM as apache servers and install php5, and then create index.php file for each of them.
-Code is like:
-
-<?php
-
-	   $arr = scandir("/proc/");
-	    
-	    for($x=0;$x<10000;$x++){
-	        asort($arr);
-	        arsort($arr);
-	    }
-	    print_r($arr);
-	    echo "server1";
-	?>
+check the file index1.php  index2.php
 
 
 2. Open VM as balancer and set the configuration file to make it connect to servers created before.
@@ -43,35 +31,12 @@ BalancerMember http://172.31.16.138:80 loadfactor=2
 
 
 3. Open VM as client to run a loop of curl so that it could continue visit the balancer.
-	Loop.sh file
+	check the file	Loop.sh 
 
-	#!bin/sh
-	while true;
-	do
-	curl http://54.187.182.77;
-	sleep 0.5;
-	done
 
 4. Restart one of the servers to see what would happen.
 5. Open another VM as the third server and change configuration file of balancer to make it randomly visit to one of the 3 servers.
-	<VirtualHost *:*>
-ServerAdmin webmaster@localhost
-DocumentRoot /var/www/html
-
-ErrorLog ${APACHE_LOG_DIR}/error.log
-CustomLog ${APACHE_LOG_DIR}/access.log combined
-
-ProxyPass / balancer://fzjh/
-ProxyPassReverse / balancer://fzjh/
-
-</VirtualHost>
-ProxyRequests Off
-<Proxy balancer://fzjh>
-BalancerMember http://172.31.25.202:80 loadfactor=2
-BalancerMember http://172.31.16.138:80 loadfactor=2
-
-BalancerMember http://172.31.29.109:80 loadfactor=2
-</Proxy>
+ check the file 000-default.conf  and index3.php
 
 6. Run loop.sh again.
 7. Restart one of the servers to see what would happen.
@@ -107,7 +72,7 @@ We can analysis the log file of the 3 servers and the balancer:
 31/Mar/2016_20_43     437.97      462.84      472.41      1079.45
 31/Mar/2016_20_44     439.60      483.13      474.72      1032.3
 
-Here is the chart to show the connection to the 3 servers and load balancer: 
+check the chart file to show the connection to the 3 servers and load balancer: 
  
 
 9. Conclusion
