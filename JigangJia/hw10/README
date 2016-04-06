@@ -84,14 +84,14 @@ We can use the clause
 grep load.php /var/log/apache2/access.log|awk '{print $10,$4}' |sed 's/\[//g' | awk -F\: '{print $1"_"$2"_"$3}' | awk '{arr[$2]+=$1}END{for(i in arr) print i,arr[i]/60}'  
 to get the connections per minute.
 
-    Time                 	    server1                     server2        	 balancer
+    Time           server1               server2        balancer
 31/Mar/2016_20_23  463.12	  	480.03       	763.42
-31/Mar/2016_20_24  501.23    	513.28		714.20
+31/Mar/2016_20_24  501.23    		513.28		714.20
 31/Mar/2016_20_25  442.23	 	485.34		795.48
-31/Mar/2016_20_26    0	  	624.326        	701.25      (server1 stop)
-31/Mar/2016_20_27    0	  	643.23		679.43
-31/Mar/2016_20_28  246.32	 	 603.27         	742.23     (server1 restart)
-31/Mar/2016_20_29  471.23	  	549.23   		758.67
+31/Mar/2016_20_26    0	  		624.326        	701.25      (server1 stop)
+31/Mar/2016_20_27    0	  		643.23		679.43
+31/Mar/2016_20_28  246.32	 	603.27         742.23     (server1 restart)
+31/Mar/2016_20_29  471.23	  	549.23   	758.67
 31/Mar/2016_20_30  442.39	  	487.324		769.54
 We could know from the log file, the number of connection to server 2 goes up and then goes down. That is because when we restart server 1, it will stop working and the load balancer redirect the request to server 2. Once the server 1 restarted, it will working again, the connection go back to the original.
 3 servers experiment result: 
@@ -100,8 +100,8 @@ We can analysis the log file of the 3 servers and the balancer:
     Time              server1     server2     server3     balancer
 31/Mar/2016_20_37     445.29      451.53      468.32      1021.23
 31/Mar/2016_20_38     424.45      448.55      461.92      1056.29
-31/Mar/2016_20_39     496.67      513.26      0     	815.37     server 3 stop
-31/Mar/2016_20_40     533.89      408.34      0	754.29
+31/Mar/2016_20_39     496.67      513.26      0     	  815.37     server 3 stop
+31/Mar/2016_20_40     533.89      408.34      0		  754.29
 31/Mar/2016_20_41     478.52      505.23      127.23      963.23     server 3 restart
 31/Mar/2016_20_42     458.68      443.06      432.45      1033.57
 31/Mar/2016_20_43     437.97      462.84      472.41      1079.45
