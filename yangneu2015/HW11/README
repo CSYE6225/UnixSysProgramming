@@ -31,7 +31,7 @@ r  b  swpd   free   buff  cache   si  so   bi   bo  in   cs us sy id wa st
 0  0      0 845812   8212 101260   0   0    0    4   12   19  0  0 100  0  0
 
 Client:
-Number of Threads: 10.      Throughput: 2.6/sec
+Number of Threads: 10.      Throughput: 2.8/sec
 
 Two-server System
 Server1:
@@ -72,7 +72,7 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
  0  0      0 843188   8300 101344    0    0     0     0   29   55  0  0 100  0  0
 
 Client:
-Number of Threads: 10.         Throughput: 4.8/sec
+Number of Threads: 10.         Throughput: 5.0/sec
 
 Three-server System:
 Server1:
