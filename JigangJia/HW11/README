@@ -1,7 +1,6 @@
 
 Using the system loader engima,load the system using Jmeter.
-Goals:to determine what is the maximum capacity that can be reached using single instance, two and three instances. 
-      And to see if our app can scale linearly. 
+Goals:to determine what is the maximum capacity that can be reached using single instance, two and three instances. And to see if our app can scale linearly. 
 1.One server system
 Using Jmeter and set the thread number is 2, and ramp up period is 30, then run the Jmeter, make the Jmeter request to server directly.
 we can monitor the resource consuming of server:
