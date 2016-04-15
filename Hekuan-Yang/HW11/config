@@ -1,0 +1,37 @@
+sudo nano /etc/apache2/sites-enabled/000-default.conf
+
+# modified the content as following
+
+<VirtualHost *:80>
+        
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html
+
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+
+ProxyPass / balancer://mycluster
+ProxyPassReverse / balancer://mycluster
+
+</VirtualHost>
+
+
+<Proxy balancer://mycluster>
+    # Define back-end servers:
+
+    # Server 1
+    BalancerMember http://172.31.30.40/
+
+    # Server 2 // added # before next line when test 1 server
+    BalancerMember http://172.31.21.1/
+
+    # Server 3 // added # before next line when test 2 servers
+    BalancerMember http://172.31.28.48/
+
+</Proxy>
