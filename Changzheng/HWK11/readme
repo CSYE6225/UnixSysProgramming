@@ -1,0 +1,4 @@
+Jmeter use and settings:
+two running environment: window and ubuntu
+becasue aws ubuntu not provide xwindow component, only use shell script pattern to finish like:  sh jmeter.sh -n -t http_request_rand.jmx -l log.jtl
+produce *.jmx define template.
