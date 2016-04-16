@@ -7,16 +7,14 @@ Label         |#Samples|Average|Median|90% Line|99% Line|Min|Max|Error %|Through
 HTTP Request    10326    289    291     317      359     55  1477   0.04%   10.0    2.2
 TOTAL           10326    289    291     317      359     55  1477   0.04%   10.0    2.2
 We can see the max throughput is 10.0/second when we load one server.
-And we collect the server record about cpu, memory and I/O.
+We collect the record of server about cpu, memory and I/O.
 procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
  r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
  2  0      0 535088  59320 310520    0    0     0     4  290  239 79 12  9  0  0
  1  0      0 535108  59320 310524    0    0     0     0  294  236 80 13  7  0  0
  2  0      0 511352  59328 310532    0    0     0     4  292  229 80 13  6  0  0
  1  0      0 534416  59336 310528    0    0     0     4  303  251 84 12  4  0  0
- 2  0      0 507828  59336 310540    0    0     0     0  307  257 86 13  1  0  0
- 1  0      0 534468  59344 310544    0    0     0     4  308  265 85 12  2  0  0
- 1  0      0 535024  59344 310548    0    0     0     4  309  258 87 12  1  0  0
+ 
 And we can get the access number per minute from server log file access.log
 2016_03_06   2299.65
 2016_03_07   2239.12
@@ -32,7 +30,89 @@ And we can get the access number per minute from server log file access.log
 Secondly, we add one instance to load balancer, and load a new valid workload using jmeter.
 
 Then we get the experiment data:
-Label         |# Samples|	Average| Median| 90% Line|99% Line	|Min	| Max	 |Error %	|Throughput	|KB/sec
-HTTP Request	  14569	    128	      120	    171	      208	      25	  1950	  0.02%	    22.6	    5
-TOTAL	          14569	    128	      120	    171	      208	      25	  1950	  0.02%	    22.6	    5
+Label         |#Samples|Average|Median|90% Line|99% Line|Min|Max|Error %|Throughput|KB/sec
+HTTP Request    14569    128    120     171      208    25   1950   0.02%   22.6    5
+TOTAL           14569    128    120     171      208    25   1950   0.02%   22.6    5
+We can see that the max throughput of client is 22.6/second.
+The server record:                  server1
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 4  0      0 520100  59712 310824    0    0     0     4  287  324 80 11  9  0  0
+ 2  0      0 507124  59720 310820    0    0     0     4  303  309 84 13  2  0  0
+ 2  0      0 507184  59720 310832    0    0     0     0  291  339 79 13  8  0  0
+                                    server2
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 3  0      0 623040  59068 193548    0    0     0     0  274  194 72 12 16  0  0
+ 1  0      0 649632  59076 193552    0    0     0    24  280  212 74 12 14  0  0
+ 0  0      0 676844  59076 193556    0    0     0     0  249  158 66 11 23  0  0
+ 
+access log:
+server1: 
+2016_03_43  2641.02
+2016_03_44  2618.3
+2016_03_45  2637.2
+2016_03_46  2599.38
+2016_03_47  2588.02
 
+server2:
+2016_03_43  2641.23
+2016_03_44  2652.63
+2016_03_45  2626.02
+2016_03_46  2614.63
+2016_03_47  2603.22
+
+
+Finally, we add one more instance to the load balancer. And create a valid workload for three servers.
+The experiment data is:
+Label         |#Samples|Average|Median|90% Line|99% Line|Min|Max|Error %|Throughput|KB/sec
+HTTP Request    36976   146     120	    246	    293	     79	 862    0.01%   32.3	7.2
+TOTAL           36976	146     120	    246	    293	     79	 862	0.01%	32.3	7.2
+We can see that the max throughput of client is 32.3/second.
+The record of server:                       server1
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 2  0      0 523948  64076 314204    0    0     0     4  255  157 69  9 22  0  0
+ 2  0      0 496736  64076 314208    0    0     0     0  263  160 72 11 17  0  0
+ 3  0      0 479624  64084 314212    0    0     0     4  307  358 89 11  0  0  0
+ 0  0      0 550588  64092 314208    0    0     0     4  276  216 78 10 12  0  0
+                                            server2
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 1  0      0 664824  64092 197460    0    0     0     0  276  228 75 12 13  0  0
+ 2  0      0 620524  64100 197464    0    0     0    15  252  186 67 11 23  0  0
+ 1  0      0 638272  64108 197460    0    0     0     4  257  172 67 12 21  0  0
+ 0  0      0 664860  64108 197472    0    0     0     0  247  158 64 11 25  0  0
+                                            server3
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 2  0      0 541480  46448 316060    0    0     0     0  252  143 67 11 21  0  1
+ 0  0      0 568088  46456 316064    0    0     0     8  253  153 68 10 22  0  0
+ 1  0      0 541512  46464 316060    0    0     0     4  258  176 67 12 20  0  1
+ 0  0      0 568080  46464 316068    0    0     0     0  252  147 69 10 21  0  1
+access number of each server:
+server1:
+2016_04_33  2474.63
+2016_04_34  2470.85
+2016_04_35  2364.87
+2016_04_36  2410.3
+2016_04_37  2414.08
+
+server2:
+2016_04_33  2485.52
+2016_04_34  2481.72
+2016_04_35  2375.33
+2016_04_36  2420.98
+2016_04_37  2420.97
+
+server3:
+2016_04_33  2478.42
+2016_04_34  2474.63
+2016_04_35  2368.67
+2016_04_36  2410.32
+2016_04_37  2398.93
+
+So, according to the max throughput of three experiments, 
+we can conclude that our application can scale linearly as the number of server increased.
+1           2           3
+10.0        22.6        32.3
