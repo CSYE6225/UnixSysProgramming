@@ -3,9 +3,9 @@ That is, jmeter create a valid workload to consume 60%-80% of CPU.
 We will collect the experiment data after several minutes.
 
 Then we get the data: 
-Label         |# Samples|	Average| Median| 90% Line|99% Line	|Min	| Max	 |Error %	|Throughput	|KB/sec
-HTTP Request	    10326	    289	      291	    317	    359	      55	  1477	 0.04%	    10.0	    2.2
-TOTAL	            10326     289	      291	    317	    359	      55	  1477	 0.04%	    10.0      2.2
+Label         |#Samples|Average|Median|90% Line|99% Line|Min|Max|Error %|Throughput|KB/sec
+HTTP Request    10326    289    291     317      359     55  1477   0.04%   10.0    2.2
+TOTAL           10326    289    291     317      359     55  1477   0.04%   10.0    2.2
 We can see the max throughput is 10.0/second when we load one server.
 And we collect the server record about cpu, memory and I/O.
 procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
