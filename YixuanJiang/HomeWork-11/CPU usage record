@@ -1,0 +1,9 @@
+When one server reach the qualified CPU usage，the record of usage of CPU, memory ,I/O and so on
+r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+8  0    0    615432  10804 138384    0    0     0    24  321 390 81 12  7  0  0
+
+When there are two servers,one of them reach the qualified CPU usage
+0  0      0 785116  11212 138448    0    0     0    24  298  344 81  8 11  0  0
+
+When there are three servers,one of them reach the qualified CPU usage
+5  0      0 665484  11160 138444    0    0     0     8  312  373 81 11  8  0  0
