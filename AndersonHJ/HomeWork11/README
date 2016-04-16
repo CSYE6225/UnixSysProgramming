@@ -1,0 +1,38 @@
+First, in order to build a base line, we will let one instance process a valid workload.
+That is, jmeter create a valid workload to consume 60%-80% of CPU.
+We will collect the experiment data after several minutes.
+
+Then we get the data: 
+Label         |# Samples|	Average| Median| 90% Line|99% Line	|Min	| Max	 |Error %	|Throughput	|KB/sec
+HTTP Request	    10326	    289	      291	    317	    359	      55	  1477	 0.04%	    10.0	    2.2
+TOTAL	            10326     289	      291	    317	    359	      55	  1477	 0.04%	    10.0      2.2
+We can see the max throughput is 10.0/second when we load one server.
+And we collect the server record about cpu, memory and I/O.
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 2  0      0 535088  59320 310520    0    0     0     4  290  239 79 12  9  0  0
+ 1  0      0 535108  59320 310524    0    0     0     0  294  236 80 13  7  0  0
+ 2  0      0 511352  59328 310532    0    0     0     4  292  229 80 13  6  0  0
+ 1  0      0 534416  59336 310528    0    0     0     4  303  251 84 12  4  0  0
+ 2  0      0 507828  59336 310540    0    0     0     0  307  257 86 13  1  0  0
+ 1  0      0 534468  59344 310544    0    0     0     4  308  265 85 12  2  0  0
+ 1  0      0 535024  59344 310548    0    0     0     4  309  258 87 12  1  0  0
+And we can get the access number per minute from server log file access.log
+2016_03_06   2299.65
+2016_03_07   2239.12
+2016_03_08   2217.03
+2016_03_09   2160.52
+2016_03_10   2224.6
+2016_03_11   2310.98
+2016_03_12   2325.52
+2016_03_13   2367.63
+2016_03_14   2329.27
+
+
+Secondly, we add one instance to load balancer, and load a new valid workload using jmeter.
+
+Then we get the experiment data:
+Label         |# Samples|	Average| Median| 90% Line|99% Line	|Min	| Max	 |Error %	|Throughput	|KB/sec
+HTTP Request	  14569	    128	      120	    171	      208	      25	  1950	  0.02%	    22.6	    5
+TOTAL	          14569	    128	      120	    171	      208	      25	  1950	  0.02%	    22.6	    5
+
