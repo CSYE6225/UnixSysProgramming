@@ -1,0 +1,177 @@
+HW11
+Kexuan Ma
+
+Goal:
+1. Learning how to use Jmeter to load the system.
+2. Finding the maximum capacity that can be reached using single instance, two and three instances. 
+3. Checking if it can scale linearly. 
+
+VMs:
+Load Balancer IP: 172.31.31.207
+Server1 IP: 172.31.26.116
+Server2 IP: 172.31.20.231
+Server3 IP: 172.31.21.94
+
+
+Test 1—One Server
+Steps:  
+1. open the Jmeter by command
+“cd apache-jmeter-2.13” 
+“cd bin/”
+“./jmeter.sh”
+2. In Jmeter, create one Thread Group, set Loop Count to “Forever”
+3.  Create “HTTP Request” “Aggregate Graph” “Aggregate Report” “View Results in Table” and “Graph Results” in thread group. In this case, we can find out maximum capacity from client side.
+4.  Because in test 1, we just want to make a one server system, so in HTTP Request, put server1’s IP inside of “Server Name or IP”. Besides, set “Port Number” to 80, “Implementation”: HttpClient4, “Protocol[http]”: http, Method: GET, set “Path:” to “/index.php”(in this homework, every server has same index.php in homework 10)
+5. Before start the Jmeter, check whether the server is valid so no system errors are generated. 
+6. Push start button in Jmeter. In server1, use command “vmstat 3” to find out the usage of CPU, Memory and IO.
+7. Because we want to find the maximum capacity that can be reached using single instance, so we need to let cpu id to reach 80 percent of capacity. In this case, we need to stop the Jmeter, increase “Number of Threads(users)” to 3, and then start again to get data.
+
+
+Results:
+
+From the data of client, we can get these information:
+Number of Threads: 3
+Throughput： 89.574/minute   1.5/sec
+KB/sec: 0.3
+The limit is CPU
+
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+0  0      0 859356   7156  95180    0    0     0     4   14   11  0  0 100  0  0
+ 1  0      0 859232   7160  95284    0    0    45     0   25   15  4  0 96  0  0
+ 1  0      0 858824   7164  95392    0    0    27     0  224   33 85  0 15  0  0
+ 1  0      0 858856   7172  95396    0    0     0     5  222   27 83  0 16  0  1
+ 1  0      0 858856   7172  95396    0    0     0     0  228   29 85  0 14  0  1
+ 1  0      0 858856   7180  95396    0    0     0     4  221   28 84  0 16  0  0
+ 1  0      0 858856   7180  95396    0    0     0     0  220   25 83  0 16  0  1
+ 1  0      0 858824   7188  95396    0    0     0     4  234   32 89  0 11  0  0
+ 1  0      0 858856   7188  95396    0    0     0     0  220   25 83  0 16  0  1
+ 1  0      0 858856   7196  95396    0    0     0     4  229   27 87  0 13  0  0
+ 0  0      0 858856   7196  95396    0    0     0     0  226   27 85  0 14  0  1
+
+
+
+Test 2—Two Server
+Steps:  
+1. Set load balancer, let it connect with server1 and server2. 
+<Proxy balancer://loadBalancer>
+    #server1
+    BalancerMember http://172.31.26.116/
+    #server2
+    BalancerMember http://172.31.20.231/
+</Proxy>
+2. Restart apache2 in Load Balancer.
+3. let client(Jmeter) to connect with load balancer, in this case, we can have two-server system. (Just change “Server Name or IP” in HTTP Request, put load balancer public IP inside of it.)
+4. Before start the Jmeter, check whether the load is valid. 
+5. Start and collect the data.
+
+Results:
+From the data of client, we can get these information:
+Number of Threads: 2
+Throughput： 195.002/minute   3.2/sec
+KB/sec: 0.7
+The limit is CPU
+
+Server 1:
+ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 1  0      0 837676   9672 109256    0    0     0     0   10   11  0  0 100  0  0
+ 1  0      0 837676   9672 109256    0    0     0     0   21   24  2  0 98  0  0
+ 1  0      0 837644   9672 109256    0    0     0     0  256   32 97  0  2  0  0
+ 1  0      0 837520   9680 109248    0    0     0     4  253   29 97  0  2  0  1
+ 1  0      0 837552   9680 109256    0    0     0     0  254   48 97  0  3  0  1
+ 1  0      0 837552   9688 109252    0    0     0    11  252   48 96  0  3  0  1
+ 1  0      0 837552   9688 109260    0    0     0     0  252   55 96  0  3  0  1
+ 1  0      0 837552   9696 109260    0    0     0     4  254   57 97  0  3  0  1
+ 1  0      0 837520   9696 109260    0    0     0     0  252   45 96  0  3  0  1
+ 1  0      0 837552   9704 109260    0    0     0     4  255   59 97  0  2  0  1
+ 
+Server 2:
+ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 0  0      0 849524   7696 101144    0    0     0     0    7   10  0  0 100  0  0
+ 0  0      0 849524   7696 101148    0    0     0     0  218   31 82  0 18  0  0
+ 1  0      0 849492   7704 101140    0    0     0     4  216   32 82  0 18  0  0
+ 1  0      0 849524   7704 101148    0    0     0     0  209   28 80  0 20  0  0
+ 1  0      0 849524   7712 101148    0    0     0    11  211   32 79  0 21  0  0
+ 1  0      0 849524   7712 101148    0    0     0     0  209   31 79  0 21  0  0
+ 1  0      0 849492   7720 101148    0    0     0     4  210   33 79  0 21  0  0
+ 1  0      0 849524   7720 101152    0    0     0     0  207   30 78  0 22  0  0
+ 1  0      0 849524   7728 101152    0    0     0     4  209   31 79  0 21  0  0
+ 1  0      0 849524   7728 101152    0    0     0     0  208   31 78  0 22  0  0
+ 0  0      0 849524   7736 101152    0    0     0     4  212   28 80  0 19  0  0
+ 0  0      0 849492   7736 101152    0    0     0     0  213   31 81  0 19  0  0
+ 
+
+
+Test 3—Three Server
+Steps:  
+1. Modify load balancer’s 000-default.conf, let it connect with server1, server2 and server3. 
+<Proxy balancer://loadBalancer>
+    #server1
+    BalancerMember http://172.31.26.116/
+    #server2
+BalancerMember http://172.31.20.231/
+    #server3
+    BalancerMember http://172.31.21.94/
+</Proxy>
+2. Restart apache2 in Load Balancer.
+3. check whether the load is valid. 
+4. Start and collect the data.
+
+Results:
+From the data of client, we can get these information:
+Number of Threads: 3. 
+Throughput： 303/minute   5.1/sec
+KB/sec: 1.1
+The limit is CPU
+
+Server1
+ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us  sy id wa st
+ 0  0      0 838520   9352 109216    0    0     0     4    7    7  0  0 100  0  0
+ 1  0      0 838552   9352 109216    0    0     0     0   44   17 14  0 86  0  0
+ 1  0      0 838552   9352 109216    0    0     0     0  254   52 96  0  3  0  1
+ 1  0      0 838552   9360 109220    0    0     0     4  259   73 99  0  1  0  0
+ 1  0      0 838552   9360 109220    0    0     0     0  261   70 100  0  0  0  0
+ 1  0      0 838520   9368 109220    0    0     0     4  259   76 99  0  1  0  1
+ 2  0      0 838552   9368 109220    0    0     0     3  260   77 99  0  1  0  0
+ 1  0      0 838552   9376 109220    0    0     0     8  261   72 100  0  0  0  0
+
+Server2:
+ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us  sy id wa st
+ 0  0      0 851012   7360 101108    0    0     0     0    8    7  0  0 100  0  0
+ 1  0      0 850732   7360 101108    0    0     0     3  192   36 71  0 28  0  1
+ 1  0      0 850764   7360 101108    0    0     0     0  219   29 83  0 17  0  0
+ 1  0      0 850764   7368 101108    0    0     0     8  229   33 87  0 13  0  0
+ 1  0      0 850764   7376 101108    0    0     0     4  214   32 81  0 19  0  0
+ 0  0      0 850732   7376 101112    0    0     0     0  215   30 81  0 19  0  0
+ 0  0      0 850732   7384 101112    0    0     0     4  212   31 80  0 19  0  0
+ 1  0      0 850764   7384 101112    0    0     0     0  218   34 82  0 18  0  0
+ 1  0      0 850764   7392 101112    0    0     0     4  219   33 83  0 17  0  0
+ 1  0      0 850764   7392 101112    0    0     0     0  219   30 83  0 17  0  0
+ 1  0      0 850732   7400 101112    0    0     0     4  213   31 80  0 20  0  0
+
+Server3:
+ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us  sy id wa st
+ 0  0      0 851200   7352 101196    0    0     0     0    7    7  0  0 100  0  0
+ 1  0      0 850984   7352 101196    0    0     0     3  180   36 66  0 34  0  0
+ 1  0      0 850984   7352 101196    0    0     0     0  238   29 92  0  8  0  0
+ 1  0      0 850984   7360 101196    0    0     0     7  222   32 84  0 16  0  0
+ 1  0      0 850984   7368 101192    0    0     0     4  213   32 80  0 20  0  0
+ 1  0      0 850952   7368 101200    0    0     0     0  219   29 83  0 17  0  0
+ 1  0      0 850984   7376 101200    0    0     0     4  222   38 84  0 16  0  0
+ 1  0      0 850984   7376 101200    0    0     0     0  222   30 84  0 15  0  0
+ 1  0      0 850860   7384 101200    0    0     0     7  221   32 84  0 16  0  0
+ 1  0      0 850828   7384 101200    0    0     0     0  218   29 82  0 17  0  0
+ 1  0      0 850364   7392 101208    0    0     0     4  221   59 82  0 18  0  0
+ 1  0
+ 
+
+
+Conclusion:
+
+For One-Server System, the max capacity is 1.5/sec, two-server system is 3.2/sec and for three-server system, the max capacity is 5.1/sec. therefore, the increasing is not scale linearly.
+Besides, we could find that the main limit of the capacity is the CPU.
