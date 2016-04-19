@@ -4,5 +4,4 @@ Set Server
 3. sudo apt-get install php5
 4. sudo apt-get install libapache2-mod-php5 php5-mcrypt
 5. cd /var/www/html
-6. sudo rm index.html
-7. sudo vi index.php
+6. sudo vi sudoku.php
