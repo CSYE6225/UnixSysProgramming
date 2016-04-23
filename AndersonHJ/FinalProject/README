@@ -1,0 +1,15 @@
+Hardware Statement
+Instance type : t2.micro
+vCPUs : 1
+Memory : 1GB
+Storage : 8GB general purpose SSD
+Network interfaces : eth0
+Operating System : Ubuntu Server 14.04 LTS (HVM), SSD Volume Type  64-bit
+
+System Software Statement
+Operating System : Ubuntu Server 14.04 LTS (HVM), SSD Volume Type  64-bit
+Web server : Apache2  
+Database : Mysql 5.6
+PHP : Memory_limit 512MB
+
+LAMP is an archetypal model of web service solution stacks, named as an acronym of the names of its original four open-source components: the Linux operating system, the Apache HTTP Server, the MySQL relational database management system (RDBMS), and the PHP programming language. The LAMP components are largely interchangeable and not limited to the original selection. As a solution stack, LAMP is suitable for building dynamic web sites and web applications.
