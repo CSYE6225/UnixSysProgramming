@@ -1,5 +1,4 @@
 #Hardware Statement
-
 Instance type : t2.micro
 vCPUs : 1
 Memory : 1GB
@@ -14,21 +13,22 @@ Web server : Apache2
 Database : Mysql 5.6
 PHP : Memory_limit 512MB
 
+
 ##LAMP
 LAMP is an archetypal model of web service solution stacks, named as an acronym of the names of its original four open-source 
 components: the Linux operating system, the Apache HTTP Server, the MySQL relational database management system (RDBMS), and the PHP. 
 The LAMP components are largely interchangeable and not limited to the original selection. As a solution stack, LAMP is suitable 
 for building dynamic web sites and web applications.
 
-##Step 1:
-1. Launch a VM: Because our website is just in the beginning, we choose t2.mirco. Just login to aws.amazon.com, sign in to the 
+##1. Launch a VM: 
+Because our website is just in the beginning, we choose t2.mirco. Just login to aws.amazon.com, sign in to the 
 console, choose EC2 service, click "Launch instance", and choose ubuntu. Although there is no significantly difference between 
 those servers, load balancer and database server, we have make a plan in our future usage. We will use t2.xlarge model as the 
 load balancer, with the configuration:vCPU 4, Mem 30.5GiB, storage 800 SSD. For the database server, we choose d2.xlarge model, 
 with the configuration: vCPU 4, Mem 30.5, Storage 3*2000 HDD. 
 
-2. Config a VW: Install Linux, Apache, MySQL, PHP (LAMP) stack on Ubuntu
-Step 1: Install Apache
+##2. Config a VW: Install Linux, Apache, MySQL, PHP (LAMP) stack on Ubuntu
+###Step 1: Install Apache
 We can install Apache easily using Ubuntu's package manager, apt. For our purposes, we can get started by typing these commands:
 
 sudo apt-get update
@@ -41,16 +41,12 @@ http://your_server_IP_address
 
 You will see the default Ubuntu 14.04 Apache web page.If you see that page, then your web server is now correctly installed.
 
-##Step 2: Install MySQL
-MySQL is a database management system. Basically, it will organize and provide access to databases where our site can store information.
-Again, we can use apt to acquire and install our software. 
+###Step 2: Install MySQL
+MySQL is a database management system. Basically, it will organize and provide access to databases where our site can store information. Again, we can use apt to acquire and install our software. 
 
 sudo apt-get install mysql-server php5-mysql
 
-Note: In this case, you do not have to run sudo apt-get update prior to the command. This is because we recently ran it in the commands
-above to install Apache. During the installation, your server will ask you to select and confirm a password for the MySQL "root" user. 
-When the installation is complete, we need to run some additional commands to get our MySQL environment set up securely.
-
+Note: In this case, you do not have to run sudo apt-get update prior to the command. This is because we recently ran it in the commands above to install Apache. During the installation, your server will ask you to select and confirm a password for the MySQL "root" user. When the installation is complete, we need to run some additional commands to get our MySQL environment set up securely.
 First, we need to tell MySQL to create its database directory structure where it will store its information. You can do this by 
 typing:
 
@@ -62,14 +58,11 @@ system a little bit. Start the interactive script by running:
 sudo mysql_secure_installation
 
 You will be asked to enter the password you set for the MySQL root account. Next, it will ask you if you want to change that password.
-For the rest of the questions, you should simply hit the "ENTER" key through each prompt to accept the default values. 
-This will remove some sample users and databases, disable remote root logins, and load these new rules so that MySQL immediately 
+For the rest of the questions, you should simply hit the "ENTER" key through each prompt to accept the default values. This will remove some sample users and databases, disable remote root logins, and load these new rules so that MySQL immediately 
 respects the changes we have made. At this point, your database system is now set up and we can move on.
 
-##Step 3: Install PHP
-PHP is the component of our setup that will process code to display dynamic content. It can run scripts, connect to our MySQL databases 
-to get information, and hand the processed content over to our web server to display.We can once again leverage the apt system to 
-install our components.  
+###Step 3: Install PHP
+PHP is the component of our setup that will process code to display dynamic content. It can run scripts, connect to our MySQL databases to get information, and hand the processed content over to our web server to display.We can once again leverage the apt system to install our components.  
 
 sudo apt-get install php5 libapache2-mod-php5 php5-mcrypt
 
@@ -79,11 +72,8 @@ typing this:
 
 sudo service apache2 restart
 
-
-###Install PHP Modules
-To enhance the functionality of PHP, we can optionally install some additional modules.
-If you decide you would like to install a package, you can do so by using the apt-get install command like we have been doing for our 
-other software. If we decided that php5-cli is something that we need, we could type:
+####Install PHP Modules
+To enhance the functionality of PHP, we can optionally install some additional modules.If you decide you would like to install a package, you can do so by using the apt-get install command like we have been doing for our other software. If we decided that php5-cli is something that we need, we could type:
 
 sudo apt-get install php5-cli
 
@@ -97,16 +87,15 @@ installed, you have many choices for what to do next. Basically, you've installe
 kinds of websites and web software on your server.
 
 
-##Install and Secure phpMyAdmin on Ubuntu
+###Install and Secure phpMyAdmin on Ubuntu
 ####About phpMyAdmin
 phpMyAdmin is an free web software to work with MySQL on the web—it provides a convenient visual front end to the MySQL capabilities.
-###Install phpMyAdmin
+####Install phpMyAdmin
 The easiest way to install phpmyadmin is :
 
 sudo apt-get install phpmyadmin apache2-utils
 
-During the installation, phpMyAdmin will walk you through a basic configuration. 
-After the installation has completed, add phpmyadmin to the apache configuration.
+During the installation, phpMyAdmin will walk you through a basic configuration. After the installation has completed, add phpmyadmin to the apache configuration.
 
 sudo nano /etc/apache2/apache2.conf
 
@@ -119,7 +108,7 @@ sudo service apache2 restart
 
 You can then access phpmyadmin by going to youripaddress/phpmyadmin. 
 
-###Accessing phpMyAdmin
+####Accessing phpMyAdmin
 phpMyAdmin will now be much more secure since only authorized users will be able to reach the login page. Fill it in with the username 
 and password that you generated. After you login you can access phpmyadmin with the MySQL username and password.
 
@@ -129,25 +118,26 @@ Magento is an open eCommerce solution that gives developers complete code visibi
 unique and engaging sites. It is supported by a vibrant community of developers and partners who continually advance the platform by 
 contributing code, creating new extensions, and participating in Magento forums and user groups.
 
-Install and Configure Magento on Ubuntu 
-##Step 1 — Configure Apache and PHP
+##Install and Configure Magento on Ubuntu 
+###Step 1 — Configure Apache and PHP
 Before we install Magento, Apache and PHP need to be configured to properly handle Magento's traffic and computing tasks, and some 
 additional modules will need to be installed and activated.
 
-###Apache Virtual Host
+####Apache Virtual Host
 First, we need to configure a virtual host file so that Apache knows how to manage our Magento site correctly. We can use our text 
 editor to create a new virtual host file in /etc/apache2/sites-available/. 
 
 sudo nano /etc/apache2/sites-available/magento.conf
 
-Magento's virtual host needs are fairly simple. Begin with a <VirtualHost> tag that listens for all traffic from port 80, the standard 
-HTTP port. We need to add some additional parameters for Magento to work properly. Inside of a <Directory> tag pointing to our 
+Magento's virtual host needs are fairly simple. Begin with a <VirtualHost> tag that listens for all traffic from port 80, the standard HTTP port. We need to add some additional parameters for Magento to work properly. Inside of a <Directory> tag pointing to our 
 document root, we'll enter the options for Apache's directory indexing, symlink support, and multilingual support. We'll also add a 
 line that allows .htaccess files to override Apache settings, which provides more fine-grained control of individual folders.
+
     <Directory /var/www/html/>
         Options Indexes FollowSymLinks MultiViews
         AllowOverride All
     </Directory>
+    
 When you're finished writing up the server block, save and close the file. To enable the new site with Apache, use the a2ensite command:
 
 sudo a2ensite magento.conf
@@ -157,18 +147,16 @@ site with Apache, use the a2dissite command:
 
 sudo a2dissite 000-default.conf
 
-###PHP Settings
+####PHP Settings
 Next, we need to change how much memory Apache grants to PHP processes. Magento uses PHP for nearly everything it does, and needs a 
 decent amount of memory for complex operations like indexing products and categories. By default, PHP allocates a maximum of 128MB of
 memory to each script running on Apache. We should bump that limit up to a reasonable amount to ensure that none of Magento's scripts 
-run out of memory, which would cause the script to crash.
-Open Apache's PHP configuration file with your text editor and root privileges:
+run out of memory, which would cause the script to crash. Open Apache's PHP configuration file with your text editor and root privileges:
 
 sudo nano /etc/php5/apache2/php.ini
 
 Change that line so that the limit is raised to 512MB. Your store's memory needs may be higher depending on the number of products in 
-your catalog and the number of visitors you receive daily. Some larger stores need to set their memory limit to 2GB or more, but 512MB 
-should be adequate for now.
+your catalog and the number of visitors you receive daily. Some larger stores need to set their memory limit to 2GB or more, but 512MB should be adequate for now.
 
 memory_limit = 512M
 
@@ -183,7 +171,7 @@ changes are applied:
 
 sudo service apache2 restart
 
-##Step 2 — Create a MySQL Database and User
+###Step 2 — Create a MySQL Database and User
 Magento uses a MySQL database to manage site data, like product and order information. We have MySQL installed and configured, but we 
 need to make a database and a user for Magento to work with. Begin by logging into the MySQL root account:
 
@@ -209,7 +197,7 @@ that we've made.
 
 FLUSH PRIVILEGES
 
-##Step 3 — Download and Set Up Magento Files
+###Step 3 — Download and Set Up Magento Files
 We are now ready to download and install Magento. Use wget to download the Magento file archive to your home directory:
 
 Wget http://www.magentocommerce.com/downloads/assets/magento.tar.gz
@@ -231,7 +219,7 @@ sudo chown -R www-data:www-data /var/www/html/
 This change will allow Apache to create and modify Magento files. We are now ready to complete the installation process via Magento's 
 browser-based configuration interface.
 
-##Step 4 — Completing Installation Through the Web Interface
+###Step 4 — Completing Installation Through the Web Interface
 To access the web interface with your browser, navigate to your server's domain name or public IP address:
 
 http://server_domain_name_or_IP/
