@@ -1,0 +1,399 @@
+a:4:{s:4:"hash";s:0:"";s:5:"mtime";i:1461629299;s:6:"expire";i:9999999999;s:4:"tags";s:70:"ea5_DEFAULT,ea5_SALES_ORDER_VIEW,ea5_LAYOUT_GENERAL_CACHE_TAG,ea5_MAGE";}
+<head>
+   <title>Magento Admin</title>
+   <meta name="viewport" content="width=1024, initial-scale=1"/>
+   <link src="requirejs/require.js"/>
+   <css src="extjs/resources/css/ext-all.css"/>
+   <css src="extjs/resources/css/ytheme-magento.css"/>
+</head>
+<body>
+   <attribute name="id" value="html-body"/>
+   <block name="require.js" class="Magento\Backend\Block\Page\RequireJs" template="Magento_Backend::page/js/require_js.phtml"/>
+   <referenceContainer name="global.notices">
+      <block class="Magento\Backend\Block\Page\Notices" name="global_notices" as="global_notices" template="page/notices.phtml"/>
+   </referenceContainer>
+   <referenceContainer name="header">
+      <block class="Magento\Backend\Block\Page\Header" name="logo" before="-">
+         <arguments>
+            <argument name="show_part" xsi:type="string">logo</argument>
+            <argument name="edition" translate="true" xsi:type="string">Community Edition</argument>
+            <argument name="logo_image_src" xsi:type="string">images/magento-icon.svg</argument>
+         </arguments>
+      </block>
+      <block class="Magento\Backend\Block\GlobalSearch" name="global.search" as="search" after="logo" acl="Magento_Backend::global_search"/>
+      <block class="Magento\Backend\Block\Page\Header" name="user" after="-">
+         <arguments>
+            <argument name="show_part" xsi:type="string">user</argument>
+         </arguments>
+      </block>
+   </referenceContainer>
+   <referenceContainer name="page.menu">
+      <block class="Magento\Backend\Block\Menu" name="menu" as="menu" template="Magento_Backend::menu.phtml"/>
+   </referenceContainer>
+   <referenceContainer name="page.breadcrumbs">
+      <block class="Magento\Backend\Block\Widget\Breadcrumbs" name="breadcrumbs" as="breadcrumbs"/>
+   </referenceContainer>
+   <referenceContainer name="page.formkey">
+      <block class="Magento\Backend\Block\Admin\Formkey" name="formkey" as="formkey" template="Magento_Backend::admin/formkey.phtml"/>
+   </referenceContainer>
+   <referenceContainer name="main.top">
+      <block class="Magento\Theme\Block\Html\Title" name="page.title" template="title.phtml"/>
+   </referenceContainer>
+   <referenceContainer name="page.messages">
+      <block class="Magento\Framework\View\Element\Messages" name="messages" as="messages"/>
+   </referenceContainer>
+   <referenceContainer name="page.main.actions">
+      <block class="Magento\Framework\View\Element\Template" name="page.actions.toolbar" template="Magento_Backend::pageactions.phtml" after="-"/>
+   </referenceContainer>
+   <referenceContainer name="footer">
+      <container name="legal" htmlTag="div" htmlClass="footer-legal">
+         <container name="legal.copyright" htmlTag="p" htmlClass="copyright col-m-6">
+            <block class="Magento\Backend\Block\Page\Copyright" name="copyright" as="copyright"/>
+         </container>
+         <container name="legal.system" htmlTag="div" htmlClass="footer-legal-system col-m-6">
+            <block class="Magento\Backend\Block\Page\Footer" name="version" as="version"/>
+            <block class="Magento\Framework\View\Element\Template" name="report" as="report" template="Magento_Backend::page/report.phtml">
+               <arguments>
+                  <argument name="bugreport_url" xsi:type="string">https://github.com/magento/magento2/issues</argument>
+               </arguments>
+            </block>
+         </container>
+      </container>
+   </referenceContainer>
+   <referenceContainer name="after.body.start">
+      <block class="Magento\RequireJs\Block\Html\Head\Config" name="requirejs-config"/>
+      <block class="Magento\Translation\Block\Html\Head\Config" name="translate-config"/>
+      <block class="Magento\Translation\Block\Js" name="translate" template="Magento_Translation::translate.phtml"/>
+      <block class="Magento\Framework\View\Element\Js\Components" name="head.components" as="components" template="Magento_Backend::page/js/components.phtml"/>
+      <block class="Magento\Framework\View\Element\Html\Calendar" name="head.calendar" as="calendar" template="Magento_Backend::page/js/calendar.phtml"/>
+   </referenceContainer>
+</body>
+<body>
+   <referenceContainer name="notifications">
+      <block class="Magento\AdminNotification\Block\System\Messages" name="system_messages" as="system_messages" before="-" template="Magento_AdminNotification::system/messages.phtml"/>
+      <block class="Magento\AdminNotification\Block\System\Messages\UnreadMessagePopup" name="unread_system_messages" as="unread_system_messages" after="system_messages" template="Magento_AdminNotification::system/messages/popup.phtml"/>
+      <block class="Magento\AdminNotification\Block\Window" name="notification_window" as="notification_window" acl="Magento_AdminNotification::show_toolbar" template="notification/window.phtml"/>
+   </referenceContainer>
+   <referenceContainer name="header">
+      <block class="Magento\AdminNotification\Block\ToolbarEntry" name="notification.messages" before="user" template="toolbar_entry.phtml"/>
+   </referenceContainer>
+</body>
+<body>
+   <block class="Magento\Framework\Pricing\Render" name="product.price.render.default">
+      <arguments>
+         <argument name="price_render_handle" xsi:type="string">catalog_product_prices</argument>
+         <argument name="use_link_for_as_low_as" xsi:type="boolean">true</argument>
+      </arguments>
+   </block>
+</body>
+<body>
+   <referenceContainer name="after.body.start">
+      <block class="Magento\Ui\Block\Logger" name="logger" template="Magento_Ui::logger.phtml"/>
+   </referenceContainer>
+</body>
+<head>
+   <css src="css/styles-old.css"/>
+   <css src="css/styles.css"/>
+</head>
+<body>
+   <referenceContainer name="root">
+      <container name="menu.wrapper" before="-" htmlTag="div" htmlClass="menu-wrapper"/>
+   </referenceContainer>
+   <referenceContainer name="header" htmlClass="page-header row">
+      <container name="header.inner.left" before="-" htmlTag="div" htmlClass="page-header-hgroup col-l-8 col-m-6"/>
+      <container name="header.inner.right" after="header.inner.left" htmlTag="div" htmlClass="page-header-actions col-l-4 col-m-6"/>
+   </referenceContainer>
+   <move element="page.menu" destination="menu.wrapper"/>
+   <move element="logo" before="-" destination="menu.wrapper"/>
+   <move element="page.title" before="-" destination="header.inner.left"/>
+   <move element="user" before="-" destination="header.inner.right"/>
+   <move element="notification.messages" after="user" destination="header.inner.right"/>
+   <move element="global.search" after="notification.messages" destination="header.inner.right"/>
+</body>
+<body>
+   <referenceBlock name="order_items">
+      <block class="Magento\Bundle\Block\Adminhtml\Sales\Order\View\Items\Renderer" as="bundle" template="sales/order/view/items/renderer.phtml"/>
+   </referenceBlock>
+</body>
+<body>
+   <referenceBlock name="order_items">
+      <block class="Magento\Downloadable\Block\Adminhtml\Sales\Items\Column\Downloadable\Name" name="column_name_downloadable" template="sales/items/column/downloadable/name.phtml" group="column"/>
+   </referenceBlock>
+</body>
+<body>
+   <referenceBlock name="sales_transactions.grid.container">
+      <block class="Magento\Backend\Block\Widget\Grid" name="sales.transactions.grid" as="grid">
+         <arguments>
+            <argument name="id" xsi:type="string">sales_transactions_grid</argument>
+            <argument name="dataSource" xsi:type="object">Magento\Sales\Model\ResourceModel\Transaction\Grid\Collection</argument>
+            <argument name="use_ajax" xsi:type="string">true</argument>
+            <argument name="default_sort" xsi:type="string">created_at</argument>
+            <argument name="default_dir" xsi:type="string">DESC</argument>
+            <argument name="save_parameters_in_session" xsi:type="string">1</argument>
+            <argument name="grid_url" path="*/*/grid" xsi:type="url">
+               <param name="_current">1</param>
+            </argument>
+         </arguments>
+         <block class="Magento\Backend\Block\Widget\Grid\ColumnSet" as="grid.columnSet" name="sales.transactions.grid.columnSet">
+            <arguments>
+               <argument name="id" xsi:type="string">sales_transactions_grid</argument>
+               <argument name="rowUrl" xsi:type="array">
+                  <item name="path" xsi:type="string">sales/*/view</item>
+                  <item name="extraParamsTemplate" xsi:type="array">
+                     <item name="txn_id" xsi:type="string">getId</item>
+                  </item>
+               </argument>
+            </arguments>
+            <block class="Magento\Backend\Block\Widget\Grid\Column" name="transaction_id" as="transaction_id">
+               <arguments>
+                  <argument name="header" translate="true" xsi:type="string">ID</argument>
+                  <argument name="type" xsi:type="string">number</argument>
+                  <argument name="index" xsi:type="string">transaction_id</argument>
+                  <argument name="id" xsi:type="string">transaction_id</argument>
+                  <argument name="header_css_class" xsi:type="string">col-id</argument>
+                  <argument name="column_css_class" xsi:type="string">col-id</argument>
+               </arguments>
+            </block>
+            <block class="Magento\Backend\Block\Widget\Grid\Column" name="increment_id" as="increment_id">
+               <arguments>
+                  <argument name="header" translate="true" xsi:type="string">Order ID</argument>
+                  <argument name="type" xsi:type="string">text</argument>
+                  <argument name="index" xsi:type="string">increment_id</argument>
+                  <argument name="id" xsi:type="string">increment_id</argument>
+                  <argument name="header_css_class" xsi:type="string">col-order-id</argument>
+                  <argument name="column_css_class" xsi:type="string">col-order-id</argument>
+               </arguments>
+            </block>
+            <block class="Magento\Backend\Block\Widget\Grid\Column" name="txn_id" as="txn_id">
+               <arguments>
+                  <argument name="header" translate="true" xsi:type="string">Transaction ID</argument>
+                  <argument name="type" xsi:type="string">text</argument>
+                  <argument name="index" xsi:type="string">txn_id</argument>
+                  <argument name="id" xsi:type="string">txn_id</argument>
+                  <argument name="header_css_class" xsi:type="string">col-transaction-id</argument>
+                  <argument name="column_css_class" xsi:type="string">col-transaction-id</argument>
+               </arguments>
+            </block>
+            <block class="Magento\Backend\Block\Widget\Grid\Column" name="parent_txn_id" as="parent_txn_id">
+               <arguments>
+                  <argument name="header" translate="true" xsi:type="string">Parent Transaction ID</argument>
+                  <argument name="type" xsi:type="string">text</argument>
+                  <argument name="index" xsi:type="string">parent_txn_id</argument>
+                  <argument name="id" xsi:type="string">parent_txn_id</argument>
+                  <argument name="header_css_class" xsi:type="string">col-parent-transaction-id</argument>
+                  <argument name="column_css_class" xsi:type="string">col-parent-transaction-id</argument>
+               </arguments>
+            </block>
+            <block class="Magento\Backend\Block\Widget\Grid\Column" name="method" as="method">
+               <arguments>
+                  <argument name="id" xsi:type="string">method</argument>
+                  <argument name="header" translate="true" xsi:type="string">Payment Method</argument>
+                  <argument name="type" xsi:type="string">options</argument>
+                  <argument name="index" xsi:type="string">method</argument>
+                  <argument name="options" model="Magento\Payment\Model\ResourceModel\Grid\TypeList" xsi:type="options"/>
+                  <argument name="option_groups" model="Magento\Payment\Model\ResourceModel\Grid\GroupList" xsi:type="options"/>
+                  <argument name="header_css_class" xsi:type="string">col-method</argument>
+                  <argument name="column_css_class" xsi:type="string">col-method</argument>
+               </arguments>
+            </block>
+            <block class="Magento\Backend\Block\Widget\Grid\Column" name="txn_type" as="txn_type">
+               <arguments>
+                  <argument name="header" translate="true" xsi:type="string">Transaction Type</argument>
+                  <argument name="type" xsi:type="string">options</argument>
+                  <argument name="index" xsi:type="string">txn_type</argument>
+                  <argument name="id" xsi:type="string">txn_type</argument>
+                  <argument name="options" model="Magento\Sales\Model\ResourceModel\Transaction\Grid\TypeList" xsi:type="options"/>
+                  <argument name="header_css_class" xsi:type="string">col-transaction-type</argument>
+                  <argument name="column_css_class" xsi:type="string">col-transaction-type</argument>
+               </arguments>
+            </block>
+            <block class="Magento\Backend\Block\Widget\Grid\Column" name="is_closed" as="is_closed">
+               <arguments>
+                  <argument name="header" translate="true" xsi:type="string">Closed</argument>
+                  <argument name="type" xsi:type="string">options</argument>
+                  <argument name="index" xsi:type="string">is_closed</argument>
+                  <argument name="id" xsi:type="string">is_closed</argument>
+                  <argument name="options" model="Magento\Config\Model\Config\Source\Yesno" xsi:type="options"/>
+                  <argument name="header_css_class" xsi:type="string">col-closed</argument>
+                  <argument name="column_css_class" xsi:type="string">col-closed</argument>
+               </arguments>
+            </block>
+            <block class="Magento\Backend\Block\Widget\Grid\Column" name="created_at" as="created_at">
+               <arguments>
+                  <argument name="header" translate="true" xsi:type="string">Created</argument>
+                  <argument name="type" xsi:type="string">datetime</argument>
+                  <argument name="index" xsi:type="string">created_at</argument>
+                  <argument name="id" xsi:type="string">created_at</argument>
+                  <argument name="header_css_class" xsi:type="string">col-period</argument>
+                  <argument name="column_css_class" xsi:type="string">col-period</argument>
+               </arguments>
+            </block>
+         </block>
+      </block>
+   </referenceBlock>
+</body>
+<update handle="sales_transactions_grid_block"/>
+<body>
+   <referenceContainer name="admin.scope.col.wrap" htmlClass="admin__old"/>
+   <referenceBlock name="sales.transactions.grid">
+      <arguments>
+         <argument name="id" xsi:type="string">order_transactions</argument>
+         <argument name="dataSource" xsi:type="object">
+            <updater>Magento\Sales\Model\Grid\CollectionUpdater</updater>
+         </argument>
+         <argument name="use_ajax" xsi:type="boolean">true</argument>
+         <argument name="default_sort" xsi:type="string">created_at</argument>
+         <argument name="default_dir" xsi:type="string">DESC</argument>
+         <argument name="save_parameters_in_session" xsi:type="boolean">true</argument>
+         <argument name="grid_url" path="*/*/transactions" xsi:type="url">
+            <param name="_current">1</param>
+         </argument>
+      </arguments>
+      <referenceBlock name="sales.transactions.grid.columnSet">
+         <arguments>
+            <argument name="id" xsi:type="string">order_transactions</argument>
+            <argument name="rowUrl" xsi:type="array">
+               <item name="path" xsi:type="string">sales/transactions/view</item>
+               <item name="params" xsi:type="array">
+                  <item name="_current" xsi:type="string">1</item>
+               </item>
+               <item name="extraParamsTemplate" xsi:type="array">
+                  <item name="txn_id" xsi:type="string">getId</item>
+               </item>
+            </argument>
+         </arguments>
+      </referenceBlock>
+   </referenceBlock>
+</body>
+<body>
+   <referenceBlock name="order_items">
+      <block class="Magento\Sales\Block\Adminhtml\Items\Column\DefaultColumn" name="column_price" template="items/price/unit.phtml" group="column"/>
+      <block class="Magento\Sales\Block\Adminhtml\Items\Column\DefaultColumn" name="column_subtotal" template="items/price/row.phtml" group="column"/>
+      <block class="Magento\Sales\Block\Adminhtml\Items\Column\DefaultColumn" name="column_total" template="items/price/total.phtml" group="column"/>
+   </referenceBlock>
+</body>
+<body>
+   <referenceBlock name="order_items">
+      <block class="Magento\Tax\Block\Adminhtml\Items\Price\Renderer" name="column_price" template="items/price/unit.phtml" group="column"/>
+      <block class="Magento\Tax\Block\Adminhtml\Items\Price\Renderer" name="column_subtotal" template="items/price/row.phtml" group="column"/>
+      <block class="Magento\Tax\Block\Adminhtml\Items\Price\Renderer" name="column_total" template="items/price/total.phtml" group="column"/>
+   </referenceBlock>
+</body>
+<body>
+   <referenceBlock name="order_items">
+      <block class="Magento\Weee\Block\Adminhtml\Items\Price\Renderer" name="column_price" template="items/price/unit.phtml" group="column"/>
+      <block class="Magento\Weee\Block\Adminhtml\Items\Price\Renderer" name="column_subtotal" template="items/price/row.phtml" group="column"/>
+      <block class="Magento\Weee\Block\Adminhtml\Items\Price\Renderer" name="column_total" template="items/price/total.phtml" group="column"/>
+   </referenceBlock>
+</body>
+<update handle="sales_order_transactions_grid_block"/>
+<head>
+   <link src="Magento_Sales::js/bootstrap/order-create-index.js"/>
+   <link src="Magento_Sales::js/bootstrap/order-post-action.js"/>
+</head>
+<update handle="sales_order_item_price"/>
+<body>
+   <referenceContainer name="admin.scope.col.wrap" htmlClass="admin__old"/>
+   <referenceContainer name="content">
+      <block class="Magento\Sales\Block\Adminhtml\Order\View" name="sales_order_edit"/>
+   </referenceContainer>
+   <referenceContainer name="left">
+      <block class="Magento\Sales\Block\Adminhtml\Order\View\Tabs" name="sales_order_tabs">
+         <block class="Magento\Sales\Block\Adminhtml\Order\View\Tab\Info" name="order_tab_info" template="order/view/tab/info.phtml">
+            <block class="Magento\Sales\Block\Adminhtml\Order\View\Messages" name="order_messages"/>
+            <block class="Magento\Sales\Block\Adminhtml\Order\View\Info" name="order_info" template="order/view/info.phtml"/>
+            <block class="Magento\Sales\Block\Adminhtml\Order\View\Items" name="order_items" template="order/view/items.phtml">
+               <block class="Magento\Sales\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer" as="default" template="order/view/items/renderer/default.phtml"/>
+               <block class="Magento\Sales\Block\Adminhtml\Items\Column\Qty" name="column_qty" template="items/column/qty.phtml" group="column"/>
+               <block class="Magento\Sales\Block\Adminhtml\Items\Column\Name" name="column_name" template="items/column/name.phtml" group="column"/>
+               <block class="Magento\Framework\View\Element\Text\ListText" name="order_item_extra_info"/>
+            </block>
+            <container name="payment_additional_info" htmlTag="div" htmlClass="order-payment-additional"/>
+            <block class="Magento\Sales\Block\Adminhtml\Order\Payment" name="order_payment"/>
+            <block class="Magento\Sales\Block\Adminhtml\Order\View\History" name="order_history" template="order/view/history.phtml"/>
+            <block class="Magento\Backend\Block\Template" name="gift_options" template="Magento_Sales::order/giftoptions.phtml">
+               <block class="Magento\Sales\Block\Adminhtml\Order\View\Giftmessage" name="order_giftmessage" template="order/view/giftmessage.phtml"/>
+            </block>
+            <block class="Magento\Sales\Block\Adminhtml\Order\Totals" name="order_totals" template="order/totals.phtml">
+               <block class="Magento\Sales\Block\Adminhtml\Order\Totals\Tax" name="tax" template="order/totals/tax.phtml"/>
+            </block>
+         </block>
+         <action method="addTab">
+            <argument name="name" xsi:type="string">order_info</argument>
+            <argument name="block" xsi:type="string">order_tab_info</argument>
+         </action>
+         <block class="Magento\Sales\Block\Adminhtml\Order\View\Tab\Invoices" name="sales_order_invoice.grid.container"/>
+         <action method="addTab">
+            <argument name="name" xsi:type="string">order_invoices</argument>
+            <argument name="block" xsi:type="string">sales_order_invoice.grid.container</argument>
+         </action>
+         <block class="Magento\Sales\Block\Adminhtml\Order\View\Tab\Creditmemos" name="sales_order_creditmemo.grid.container"/>
+         <action method="addTab">
+            <argument name="name" xsi:type="string">order_creditmemos</argument>
+            <argument name="block" xsi:type="string">sales_order_creditmemo.grid.container</argument>
+         </action>
+         <block class="Magento\Sales\Block\Adminhtml\Order\View\Tab\Shipments" name="sales_order_shipment.grid.container"/>
+         <action method="addTab">
+            <argument name="name" xsi:type="string">order_shipments</argument>
+            <argument name="block" xsi:type="string">sales_order_shipment.grid.container</argument>
+         </action>
+         <action method="addTab">
+            <argument name="name" xsi:type="string">order_history</argument>
+            <argument name="block" xsi:type="string">Magento\Sales\Block\Adminhtml\Order\View\Tab\History</argument>
+         </action>
+         <block class="Magento\Sales\Block\Adminhtml\Order\View\Tab\Transactions" name="sales_transactions.grid.container"/>
+         <action method="addTab">
+            <argument name="name" xsi:type="string">order_transactions</argument>
+            <argument name="block" xsi:type="string">sales_transactions.grid.container</argument>
+         </action>
+      </block>
+   </referenceContainer>
+   <referenceBlock name="head.components">
+      <block class="Magento\Framework\View\Element\Js\Components" name="sales_page_head_components" template="Magento_Sales::page/js/components.phtml"/>
+   </referenceBlock>
+   <referenceBlock name="sales_order_invoice.grid.container">
+      <uiComponent name="sales_order_view_invoice_grid"/>
+   </referenceBlock>
+   <referenceBlock name="sales_order_creditmemo.grid.container">
+      <uiComponent name="sales_order_view_creditmemo_grid"/>
+   </referenceBlock>
+   <referenceBlock name="sales_order_shipment.grid.container">
+      <uiComponent name="sales_order_view_shipment_grid"/>
+   </referenceBlock>
+</body>
+<body>
+   <referenceBlock name="order_item_extra_info">
+      <block class="Magento\GiftMessage\Block\Adminhtml\Sales\Order\View\Giftoptions" name="gift_options_link" template="sales/order/view/giftoptions.phtml">
+         <block class="Magento\GiftMessage\Block\Adminhtml\Sales\Order\View\Items" name="gift_options_item_data" template="sales/order/view/items.phtml"/>
+      </block>
+   </referenceBlock>
+   <referenceBlock name="order_tab_info">
+      <block class="Magento\Backend\Block\Template" name="popup_window" template="Magento_GiftMessage::popup.phtml">
+         <block class="Magento\GiftMessage\Block\Adminhtml\Sales\Order\View\Form" name="gift_options_form" template="giftoptionsform.phtml"/>
+      </block>
+   </referenceBlock>
+</body>
+<body>
+   <referenceBlock name="order_items">
+      <block class="Magento\GroupedProduct\Block\Adminhtml\Items\Column\Name\Grouped" name="column_name_grouped" template="Magento_Sales::items/column/name.phtml" group="column"/>
+   </referenceBlock>
+</body>
+<body>
+   <referenceBlock name="order_totals">
+      <block class="Magento\Weee\Block\Sales\Order\Totals" name="weee_ord_totals">
+         <action method="setBeforeCondition">
+            <argument name="condition" xsi:type="string">tax</argument>
+         </action>
+      </block>
+   </referenceBlock>
+</body>
+<body>
+   <referenceContainer name="payment_additional_info">
+      <block class="Magento\Authorizenet\Block\Adminhtml\Order\View\Info\FraudDetails" name="authorizenet_fraud_details" template="Magento_Authorizenet::order/view/info/fraud_details.phtml"/>
+   </referenceContainer>
+</body>
+<body>
+   <referenceBlock name="order_tab_info">
+      <block class="Magento\Sales\Block\Adminhtml\Order\AbstractOrder" name="order_shipping_view" template="Magento_Shipping::order/view/info.phtml"/>
+   </referenceBlock>
+</body>

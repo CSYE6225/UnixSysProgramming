@@ -1,0 +1,13 @@
+a:4:{s:4:"hash";s:0:"";s:5:"mtime";i:1461629253;s:6:"expire";i:9999999999;s:4:"tags";s:53:"ea5_ADMIN_LOGIN,ea5_LAYOUT_GENERAL_CACHE_TAG,ea5_MAGE";}
+<container name="root" htmlTag="section" htmlClass="page-wrapper">
+   <container name="after.body.start" as="after.body.start" label="Page Top" before="-"/>
+   <container name="login.header" htmlTag="header" htmlClass="login-header"/>
+   <container name="login.content" htmlTag="div" htmlClass="login-content"/>
+   <container name="login.footer" htmlTag="footer" htmlClass="login-footer"/>
+</container>
+<container name="root" htmlTag="section" htmlClass="page-wrapper">
+   <container name="after.body.start" as="after.body.start" label="Page Top" before="-"/>
+   <container name="login.header" htmlTag="header" htmlClass="login-header"/>
+   <container name="login.content" htmlTag="div" htmlClass="login-content"/>
+   <container name="login.footer" htmlTag="footer" htmlClass="login-footer"/>
+</container>

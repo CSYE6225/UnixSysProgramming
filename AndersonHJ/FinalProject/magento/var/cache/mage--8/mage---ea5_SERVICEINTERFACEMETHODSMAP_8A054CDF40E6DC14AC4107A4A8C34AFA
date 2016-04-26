@@ -1,0 +1,2 @@
+a:4:{s:4:"hash";s:0:"";s:5:"mtime";i:1461629100;s:6:"expire";i:9999999999;s:4:"tags";s:23:"ea5_REFLECTION,ea5_MAGE";}
+a:2:{s:20:"getDownloadableLinks";a:4:{s:4:"type";s:5:"int[]";s:10:"isRequired";b:1;s:11:"description";N;s:14:"parameterCount";i:0;}s:20:"setDownloadableLinks";a:4:{s:4:"type";s:4:"this";s:10:"isRequired";b:1;s:11:"description";N;s:14:"parameterCount";i:1;}}

@@ -1,0 +1,169 @@
+a:4:{s:4:"hash";s:0:"";s:5:"mtime";i:1461629253;s:6:"expire";i:9999999999;s:4:"tags";s:74:"ea5_DEFAULT,ea5_ADMINHTML_AUTH_LOGIN,ea5_LAYOUT_GENERAL_CACHE_TAG,ea5_MAGE";}
+<head>
+   <title>Magento Admin</title>
+   <meta name="viewport" content="width=1024, initial-scale=1"/>
+   <link src="requirejs/require.js"/>
+   <css src="extjs/resources/css/ext-all.css"/>
+   <css src="extjs/resources/css/ytheme-magento.css"/>
+</head>
+<body>
+   <attribute name="id" value="html-body"/>
+   <block name="require.js" class="Magento\Backend\Block\Page\RequireJs" template="Magento_Backend::page/js/require_js.phtml"/>
+   <referenceContainer name="global.notices">
+      <block class="Magento\Backend\Block\Page\Notices" name="global_notices" as="global_notices" template="page/notices.phtml"/>
+   </referenceContainer>
+   <referenceContainer name="header">
+      <block class="Magento\Backend\Block\Page\Header" name="logo" before="-">
+         <arguments>
+            <argument name="show_part" xsi:type="string">logo</argument>
+            <argument name="edition" translate="true" xsi:type="string">Community Edition</argument>
+            <argument name="logo_image_src" xsi:type="string">images/magento-icon.svg</argument>
+         </arguments>
+      </block>
+      <block class="Magento\Backend\Block\GlobalSearch" name="global.search" as="search" after="logo" acl="Magento_Backend::global_search"/>
+      <block class="Magento\Backend\Block\Page\Header" name="user" after="-">
+         <arguments>
+            <argument name="show_part" xsi:type="string">user</argument>
+         </arguments>
+      </block>
+   </referenceContainer>
+   <referenceContainer name="page.menu">
+      <block class="Magento\Backend\Block\Menu" name="menu" as="menu" template="Magento_Backend::menu.phtml"/>
+   </referenceContainer>
+   <referenceContainer name="page.breadcrumbs">
+      <block class="Magento\Backend\Block\Widget\Breadcrumbs" name="breadcrumbs" as="breadcrumbs"/>
+   </referenceContainer>
+   <referenceContainer name="page.formkey">
+      <block class="Magento\Backend\Block\Admin\Formkey" name="formkey" as="formkey" template="Magento_Backend::admin/formkey.phtml"/>
+   </referenceContainer>
+   <referenceContainer name="main.top">
+      <block class="Magento\Theme\Block\Html\Title" name="page.title" template="title.phtml"/>
+   </referenceContainer>
+   <referenceContainer name="page.messages">
+      <block class="Magento\Framework\View\Element\Messages" name="messages" as="messages"/>
+   </referenceContainer>
+   <referenceContainer name="page.main.actions">
+      <block class="Magento\Framework\View\Element\Template" name="page.actions.toolbar" template="Magento_Backend::pageactions.phtml" after="-"/>
+   </referenceContainer>
+   <referenceContainer name="footer">
+      <container name="legal" htmlTag="div" htmlClass="footer-legal">
+         <container name="legal.copyright" htmlTag="p" htmlClass="copyright col-m-6">
+            <block class="Magento\Backend\Block\Page\Copyright" name="copyright" as="copyright"/>
+         </container>
+         <container name="legal.system" htmlTag="div" htmlClass="footer-legal-system col-m-6">
+            <block class="Magento\Backend\Block\Page\Footer" name="version" as="version"/>
+            <block class="Magento\Framework\View\Element\Template" name="report" as="report" template="Magento_Backend::page/report.phtml">
+               <arguments>
+                  <argument name="bugreport_url" xsi:type="string">https://github.com/magento/magento2/issues</argument>
+               </arguments>
+            </block>
+         </container>
+      </container>
+   </referenceContainer>
+   <referenceContainer name="after.body.start">
+      <block class="Magento\RequireJs\Block\Html\Head\Config" name="requirejs-config"/>
+      <block class="Magento\Translation\Block\Html\Head\Config" name="translate-config"/>
+      <block class="Magento\Translation\Block\Js" name="translate" template="Magento_Translation::translate.phtml"/>
+      <block class="Magento\Framework\View\Element\Js\Components" name="head.components" as="components" template="Magento_Backend::page/js/components.phtml"/>
+      <block class="Magento\Framework\View\Element\Html\Calendar" name="head.calendar" as="calendar" template="Magento_Backend::page/js/calendar.phtml"/>
+   </referenceContainer>
+</body>
+<body>
+   <referenceContainer name="notifications">
+      <block class="Magento\AdminNotification\Block\System\Messages" name="system_messages" as="system_messages" before="-" template="Magento_AdminNotification::system/messages.phtml"/>
+      <block class="Magento\AdminNotification\Block\System\Messages\UnreadMessagePopup" name="unread_system_messages" as="unread_system_messages" after="system_messages" template="Magento_AdminNotification::system/messages/popup.phtml"/>
+      <block class="Magento\AdminNotification\Block\Window" name="notification_window" as="notification_window" acl="Magento_AdminNotification::show_toolbar" template="notification/window.phtml"/>
+   </referenceContainer>
+   <referenceContainer name="header">
+      <block class="Magento\AdminNotification\Block\ToolbarEntry" name="notification.messages" before="user" template="toolbar_entry.phtml"/>
+   </referenceContainer>
+</body>
+<body>
+   <block class="Magento\Framework\Pricing\Render" name="product.price.render.default">
+      <arguments>
+         <argument name="price_render_handle" xsi:type="string">catalog_product_prices</argument>
+         <argument name="use_link_for_as_low_as" xsi:type="boolean">true</argument>
+      </arguments>
+   </block>
+</body>
+<body>
+   <referenceContainer name="after.body.start">
+      <block class="Magento\Ui\Block\Logger" name="logger" template="Magento_Ui::logger.phtml"/>
+   </referenceContainer>
+</body>
+<head>
+   <css src="css/styles-old.css"/>
+   <css src="css/styles.css"/>
+</head>
+<body>
+   <referenceContainer name="root">
+      <container name="menu.wrapper" before="-" htmlTag="div" htmlClass="menu-wrapper"/>
+   </referenceContainer>
+   <referenceContainer name="header" htmlClass="page-header row">
+      <container name="header.inner.left" before="-" htmlTag="div" htmlClass="page-header-hgroup col-l-8 col-m-6"/>
+      <container name="header.inner.right" after="header.inner.left" htmlTag="div" htmlClass="page-header-actions col-l-4 col-m-6"/>
+   </referenceContainer>
+   <move element="page.menu" destination="menu.wrapper"/>
+   <move element="logo" before="-" destination="menu.wrapper"/>
+   <move element="page.title" before="-" destination="header.inner.left"/>
+   <move element="user" before="-" destination="header.inner.right"/>
+   <move element="notification.messages" after="user" destination="header.inner.right"/>
+   <move element="global.search" after="notification.messages" destination="header.inner.right"/>
+</body>
+<head>
+   <remove src="css/styles-old.css"/>
+   <remove src="jquery/farbtastic/css/farbtastic.css"/>
+   <css src="css/styles.css"/>
+</head>
+<body>
+   <referenceContainer name="admin.scope.col.wrap" htmlClass="admin__old"/>
+</body>
+<update handle="styles"/>
+<body>
+   <referenceContainer name="legal" remove="true"/>
+   <referenceContainer name="page.menu" remove="true"/>
+   <referenceContainer name="header" remove="true"/>
+   <referenceBlock name="page.title" remove="true"/>
+   <referenceBlock name="user" remove="true"/>
+   <referenceBlock name="global.search" remove="true"/>
+   <referenceBlock name="notification.messages" remove="true"/>
+   <move element="messages" destination="login.content" before="-"/>
+   <move element="copyright" destination="login.footer" before="-"/>
+   <move element="logo" destination="login.header" before="-"/>
+   <referenceBlock name="logo">
+      <arguments>
+         <argument name="logo_image_src" xsi:type="string">images/magento-logo.svg</argument>
+      </arguments>
+   </referenceBlock>
+</body>
+<update handle="admin_login"/>
+<body>
+   <referenceContainer name="login.content">
+      <block class="Magento\Backend\Block\Template" name="admin.login" template="admin/login.phtml">
+         <container name="form.additional.info" label="Form Additional Info"/>
+         <container name="form.buttons" label="Form Buttons">
+            <block class="Magento\Backend\Block\Template" name="adminhtml_auth_login_buttons" template="admin/login_buttons.phtml"/>
+         </container>
+      </block>
+   </referenceContainer>
+</body>
+<body>
+   <referenceContainer name="form.buttons">
+      <block class="Magento\Backend\Block\Template" name="adminhtml_auth_login_forgotpassword" template="Magento_User::admin/forgotpassword_url.phtml"/>
+   </referenceContainer>
+</body>
+<body>
+   <referenceContainer name="form.additional.info">
+      <block class="Magento\Captcha\Block\Captcha" name="captcha">
+         <action method="setFormId">
+            <argument name="formId" xsi:type="string">backend_login</argument>
+         </action>
+         <action method="setImgWidth">
+            <argument name="width" xsi:type="string">226</argument>
+         </action>
+         <action method="setImgHeight">
+            <argument name="width" xsi:type="string">50</argument>
+         </action>
+      </block>
+   </referenceContainer>
+</body>

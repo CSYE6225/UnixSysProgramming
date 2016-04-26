@@ -1,0 +1,17 @@
+a:4:{s:4:"hash";s:0:"";s:5:"mtime";i:1461629300;s:6:"expire";i:9999999999;s:4:"tags";s:19:"ea5_CONFIG,ea5_MAGE";}
+a:1:{s:8:"9457fd07";s:674:"<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<div xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" class="admin__data-grid-outer-wrap" data-bind="scope: '{{getName()}}.{{getName()}}'" xsi:noNamespaceSchemaLocation="../../../../../../Ui/etc/ui_template.xsd">
+    <div data-role="spinner" data-component="{{getName()}}.{{getName()}}.{{spinner}}" class="admin__data-grid-loading-mask">
+        <div class="spinner">
+            <span/><span/><span/><span/><span/><span/><span/><span/>
+        </div>
+    </div>
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+";}
