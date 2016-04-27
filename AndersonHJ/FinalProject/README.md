@@ -14,6 +14,7 @@ Operating System : Ubuntu Server 14.04 LTS (HVM), SSD Volume Type  64-bit
 Web server : Apache2  
 Database : Mysql 5.6
 PHP : Memory_limit 512MB
+phpmyadmin
 ```
 
 ##LAMP
@@ -39,7 +40,18 @@ browser :
 
 You will see the default Ubuntu 14.04 Apache web page.If you see that page, then your web server is now correctly installed.
 
-And if we want to configure the apache http server to a load balancer. We need to use the proxy module of appache. 
+####Configure Load Balancer
+And if we want to configure the apache http server to a load balancer. To set up our load-balancer, we use the Apache web-server and its modules mod_proxy, mod_proxy_ajp and mod_proxy_balancer. These are part of most of the Apache web-server distributions.
+
+    <Proxy "balancer://mycluster">
+        BalancerMember "http://your_server_IP_address"
+        BalancerMember "http://your_server_IP_address"
+    </Proxy>
+    <VirtualHost *:80>
+        ProxyRequests off
+        ProxyPass "/test" "balancer://mycluster"
+        ProxyPassReverse "/test" "balancer://mycluster"
+    </VirtualHost>
 
 ###Step 2: Install MySQL
 MySQL is a database management system. Basically, it will organize and provide access to databases where our site can store information. Again, we can use apt to acquire and install our software. 
@@ -229,6 +241,33 @@ You can also visit your new admin site by going to the admin directory that you 
     http://server_domain_name_or_IP/admin/
 
 Log in with your admin username and password to see your new dashboard.
-
-#Conclusion
 Now that you have your Magento store up and running, you are ready to begin building your project catalog and start selling!
+
+##Github
+###push file
+```
+git add filename
+
+git commit -m "commit name"
+
+git push origin master
+```
+###download project
+```
+git config --global user.name "AndersonHJ"
+
+git config --global user.email "hou.jia@husky.neu.edu"
+
+git clone https://github.com/CSYE6225/UnixSysProgramming.git
+
+cd UnixSysProgramming/AndersonHJ/FinalProject
+
+```
+###pull files
+```
+git pull
+```
+    
+    
+
+
