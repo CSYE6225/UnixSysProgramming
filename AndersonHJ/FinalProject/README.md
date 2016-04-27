@@ -31,13 +31,13 @@ with the configuration: vCPU 4, Mem 30.5, Storage 3*2000 HDD.
 ###Step 1: Install Apache
 We can install Apache easily using Ubuntu's package manager, apt. For our purposes, we can get started by typing these commands:
 
-sudo apt-get update
-sudo apt-get install apache2
+    sudo apt-get update
+    sudo apt-get install apache2
 
 You can do a spot check right away to verify that everything went as planned by visiting your server's public IP address in your web 
 browser :
 
-http://your_server_IP_address
+    http://your_server_IP_address
 
 You will see the default Ubuntu 14.04 Apache web page.If you see that page, then your web server is now correctly installed.
 
@@ -127,7 +127,7 @@ additional modules will need to be installed and activated.
 First, we need to configure a virtual host file so that Apache knows how to manage our Magento site correctly. We can use our text 
 editor to create a new virtual host file in /etc/apache2/sites-available/. 
 
-sudo nano /etc/apache2/sites-available/magento.conf
+    sudo nano /etc/apache2/sites-available/magento.conf
 
 Magento's virtual host needs are fairly simple. Begin with a <VirtualHost> tag that listens for all traffic from port 80, the standard HTTP port. We need to add some additional parameters for Magento to work properly. Inside of a <Directory> tag pointing to our 
 document root, we'll enter the options for Apache's directory indexing, symlink support, and multilingual support. We'll also add a 
