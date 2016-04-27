@@ -3,7 +3,7 @@ Instance type : t2.micro
 vCPUs : 1
 Memory : 1GB
 Storage : 8GB general purpose SSD
-Network interfaces : eth0
+Network interfaces : eth0 
 Operating System : Ubuntu Server 14.04 LTS (HVM), SSD Volume Type  64-bit
 
 
