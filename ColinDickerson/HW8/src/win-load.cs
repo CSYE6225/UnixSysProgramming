@@ -11,8 +11,8 @@ namespace LoadTester
     class Program
     {
         public const string LoadBalancerUrl = "http://104.196.213.144/load.php";
-        public const int NumThreads = 500;
-        public const int SleepTime = 0;
+        public const int NumThreads = 100;
+        public const int SleepTime = 1;
 
         private bool _run;
 
@@ -24,6 +24,8 @@ namespace LoadTester
 
         public void Run()
         {
+            ServicePointManager.DefaultConnectionLimit = NumThreads;
+            
             _run = true;
 
             for (var i = 0; i < NumThreads; i++)
